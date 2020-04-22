@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: Arial;
+            font-size: 35px;
+        }
+
+        body {
+            background-color: black;
+            height: 100vh;
+        }
+
+        .container {
+            border: 4px solid white;
+            height: 300px;
+            width: 500px;
+            /* background-color: red; */
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        input {
+            color: black;
+        }
+
+        .message {
+            width: 90%;
+            border: 4px solid white;
+            align-self: center;
+            /* flex-basis: 20%; */
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        .active {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <label for="pass">Podaj hasło: </label><input id="pass" type="text">
+        <div class="message"></div>
+    </div>
+
+    <!-- <script src="kod.js"></script>  DLA POJEDYŃCZEGO HASŁA -->
+    <!-- <script src="kod_1.1.js"></script> DLA WIELLU HASEŁ -->
+
+    <!-- <script src="kod_1.2.js"></script> WIELKOŚĆ LITER NIE MA ZNACZENIA -->
+    <!-- wielkość liter nie ma znaczenia - ULEPSZONE-->
+    <!-- <script src="kod_1.3.js"></script>ELEGACNKI SPOSÓB -->
+
+    <!-- KONWERTOWANIE TABLICY ZA POMOCĄ METODY MAP -->
+    <script src="kod_1.4.js"></script>
+</body>
+
+</html>
