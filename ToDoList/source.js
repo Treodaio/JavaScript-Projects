@@ -5,16 +5,39 @@ const btn = document.querySelector('button.add');
 const ul = document.querySelector('ul');
 const li = document.getElementsByClassName('improved');
 let tasksCounter = document.querySelector('h1 span');
+//liItem === task
+let searchList = [];
+const toDoList = [];
 
 
-const removeTask = (e) => {
 
-    e.target.parentNode.remove();
-    tasksCounter.innerHTML = li.length;
+const stylingEffects = (liItem) => {
+    liItem.querySelector('button').addEventListener('mouseover', (e) => {
+        e.target.classList.add('remove_button_on_hover');
+    });
+    liItem.querySelector('button').addEventListener('mouseout', (e) => {
+        e.target.classList.remove('remove_button_on_hover');
+    });
 }
 
 
-let results = [];
+const refreshTasks = () => {
+    ul.textContent = "";
+    toDoList.forEach((task, taskNumber) => {
+        task.dataset.key = taskNumber;
+        ul.appendChild(task);
+    })
+    tasksCounter.textContent = li.length;
+}
+
+const removeTask = (e) => {
+    taskNumber = e.target.parentNode.dataset.key;
+    toDoList.splice(taskNumber, 1);
+
+    refreshTasks();
+}
+
+
 
 const addTask = (e) => {
     e.preventDefault();
@@ -24,21 +47,24 @@ const addTask = (e) => {
     liItem.innerHTML = newTask + "<button>Usuń</button>";
     liItem.querySelector('button').classList.add('remove_button');
     liItem.classList.add('improved');
-    ul.appendChild(liItem);
-    tasksCounter.innerHTML = li.length;
-    typedText.value = "";
+    toDoList.push(liItem);
+    refreshTasks();
+    // tasksCounter.innerHTML = li.length;
     liItem.querySelector('button').addEventListener('click', removeTask);
+
+    stylingEffects(liItem);
+
+    typedText.value = "";
 }
 
 
 const search = (e) => {
     const userType = e.target.value.toLowerCase();
-    const liElements = [...li];
-    results = liElements.filter((item) => item.textContent.toLowerCase().includes(userType));
-    ul.innerHTML = "";
-    results.forEach(item => ul.appendChild(item));
-}
+    searchList = toDoList.filter((item) => item.textContent.toLowerCase().includes(userType));
+    ul.textContent = "";
+    searchList.forEach(item => ul.appendChild(item));
 
+}
 
 
 
