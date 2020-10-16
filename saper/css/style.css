@@ -1,0 +1,46 @@
+/* font-family: 'Lato', sans-serif; */
+
+:root {
+    --primary-color: #C0C0C0;
+    --primary-color--darker-grey: #808080;
+    --alarm-color: #f80000;
+
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Thanks to this setting 1rem is now 10px */
+html {
+    font-size: 62.5%;
+}
+
+.game {
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    max-width: 35.6rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+}
+
+.header__counter {
+    background-color: #000;
+    color: var(--alarm-color);
+    padding: 0.5rem;
+}
