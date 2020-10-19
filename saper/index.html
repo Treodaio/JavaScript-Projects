@@ -12,15 +12,82 @@
 <body>
     <!-- chyba raczej module. -->
     <main class="game">
-        <header class="header">
-            <article class="header__couter">0</article>
-            <button class="header__reset">
-                <use href="./assets/sprite.svg#neutral"></use>
+        <header class="header border border--convex">
+            <article class="header__counter">0</article>
+            <button class="header__reset border border--concave">
+                <svg class="header__button">
+                    <use href="./assets/sprite.svg#neutral"></use>
+                </svg>
             </button>
             <article class="header__counter">0</article>
         </header>
-        <article class="game__board"></article>
-        <article class="game_panel">
+        <article class="game__board border border--convex">
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+            <div class="cell border border--concave"></div>
+        </article>
+        <article class="game_panel border border--convex">
             <header class="panel__header">
                 <h1 class="panel__heading">Select Difficulty</h1>
 
@@ -34,7 +101,7 @@
         <article class="modal hide">
             <section class="modal__content">
                 <h2 class="modal__text">You Won!</h2>
-                <button class="modal__buton">Play Again</button>
+                <button class="modal__button">Play Again</button>
             </section>
         </article>
 
