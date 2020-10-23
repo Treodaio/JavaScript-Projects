@@ -1,7 +1,8 @@
 
 import { Cell } from './Cell.js';
 import { UI } from './UI.js';
-
+import { Counter } from './Counter.js';
+import { Timer } from './Timer.js';
 
 class Game extends UI {
     #config = {
@@ -33,10 +34,14 @@ class Game extends UI {
     #cellsElements = null;
     #board = null;
 
+    #counter = new Counter();
+    #Timer = new Timer();
 
 
     initializeGame() {
         this.#handleElements();
+        this.#counter.init();
+        this.#Timer.init();
         this.#newGame();
     }
 
@@ -49,11 +54,15 @@ class Game extends UI {
     #newGame(
         rows = this.#config.easy.rows,
         cols = this.#config.easy.cols,
-        mines = this.#config.easy.mines
+        mines = this.#config.easy.mines,
+
     ) {
         this.#numberOfRows = rows;
         this.#numberOfCols = cols;
         this.#numberOfMines = mines;
+
+        this.#counter.setValue(this.#numberOfMines);
+        this.#Timer.startTimer();
 
         this.#setStyles();
         this.#generateCells();
@@ -83,7 +92,30 @@ class Game extends UI {
         this.#cells[rowIndex][colIndex].revealCell();
     }
 
-    #handleCellContextMenu = (e) => { };
+
+    #handleCellContextMenu = (e) => {
+        e.preventDefault();
+
+        const target = e.target;
+        const rowIndex = parseInt(target.getAttribute('data-y'), 10);
+        const colIndex = parseInt(target.getAttribute('data-x'), 10);
+
+        const cell = this.#cells[rowIndex][colIndex];
+
+        if (cell.isReveal) return;
+
+        if (cell.isFlagged) {
+            this.#counter.increment();
+            cell.toggleFlag();
+            return;
+        }
+        //if value is not equal to zero it gaves true 
+        if (!!this.#counter.value) {
+            this.#counter.decrement();
+            cell.toggleFlag();
+        }
+
+    };
 
     // generuje komórki w pamięci.
     #generateCells() {
