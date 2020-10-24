@@ -6,6 +6,17 @@
     --primary-color--darker-grey: #808080;
     --alarm-color: #f80000;
 
+
+    --info-one-color: #0200fc;
+    --info-two-color: #017e00;
+    --info-three-color: #ff0000;
+    --info-four-color: #010080;
+    --info-five-color: #7f0300;
+    --info-six-color: #008080;
+    --info-seven-color: #000000;
+    --info-eight-color: #eaec45;
+
+
     --cell-size: 4rem;
     --game-padding: 1.5rem;
     --border-width: 0.3rem;
@@ -30,6 +41,7 @@
 }
 
 body {
+    background-color: black;
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
 }
@@ -46,6 +58,7 @@ html {
     max-width: var(--game-max-width);
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
 }
 
 .game__board {
@@ -178,11 +191,6 @@ html {
     border-color: var(--primary-color--dark);
 }
 
-.cell--is-flag {
-    background-image: url('../assets/flag.svg');
-}
-
-
 .cell {
     width: var(--cell-size);
     height: var(--cell-size);
@@ -190,10 +198,58 @@ html {
     background-size: 2rem;
     background-position: center;
     background-repeat: no-repeat;
+    font-size: 2.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .cell:hover {
 background-color: rgb(248, 248, 248);
 }
+
+
+.cell--is-flag {
+    background-image: url('../assets/flag.svg');
+}
+
+.cell--is-mine {
+    background-image: url('../assets/bomb.svg');
+    background-color: var(--alarm-color);
+}
+
+.cell--info-1 {
+    color: var(--info-one-color);
+}
+
+.cell--info-2 {
+    color: var(--info-two-color);
+}
+
+.cell--info-3 {
+    color: var(--info-three-color);
+}
+
+.cell--info-4 {
+    color: var(--info-four-color);
+}
+
+.cell--info-5 {
+    color: var(--info-five-color);
+}
+
+.cell--info-6 {
+    color: var(--info-six-color);
+}
+
+.cell--info-7 {
+    color: var(--info-seven-color);
+}
+
+.cell--info-9 {
+    color: var(--info-eight-color);
+}
+
+
 
 .hide {
     visibility: hidden;

@@ -3,6 +3,7 @@ import { Cell } from './Cell.js';
 import { UI } from './UI.js';
 import { Counter } from './Counter.js';
 import { Timer } from './Timer.js';
+import { resetButton } from './resetButton.js';
 
 class Game extends UI {
     #config = {
@@ -11,7 +12,7 @@ class Game extends UI {
             cols: 8,
             mines: 10,
         },
-        medium: {
+        normal: {
             rows: 16,
             cols: 16,
             mines: 40,
@@ -36,14 +37,28 @@ class Game extends UI {
 
     #counter = new Counter();
     #Timer = new Timer();
+    #isGameFinished = false;
+
+
+    #buttons = {
+        modal: null,
+        easy: null,
+        medium: null,
+        expert: null,
+        reset: new resetButton(),
+    }
 
 
     initializeGame() {
         this.#handleElements();
         this.#counter.init();
         this.#Timer.init();
+        this.#addButtonsEventListeners();
         this.#newGame();
     }
+
+
+
 
     //
     #setStyles() {
@@ -62,19 +77,33 @@ class Game extends UI {
         this.#numberOfMines = mines;
 
         this.#counter.setValue(this.#numberOfMines);
-        this.#Timer.startTimer();
+        this.#Timer.resetTimer();
 
         this.#setStyles();
         this.#generateCells();
         this.#renderBoard();
-
+        this.#placeMinesInCells();
 
         this.#cellsElements = this.getElements(this.UiSelectors.cell);
-        this.#cellsElements = this.#addCellsEventListeners();
+        this.#addCellsEventListeners();
     }
-    // do przygotowanych zmiennych włóż selektory wymienione w klasie UI za pomocą metod zdefiniowanych w UI.
+
+
+    #endGame(isWin) {
+        this.#isGameFinished = true;
+        this.#Timer.stopTimer();
+
+        if (!isWin) {
+            this.#revealAllMines()
+        }
+    }
+
     #handleElements() {
         this.#board = this.getElement(this.UiSelectors.board);
+        this.#buttons.modal = this.getElement(this.UiSelectors.modalButton);
+        this.#buttons.easy = this.getElement(this.UiSelectors.easyButton);
+        this.#buttons.normal = this.getElement(this.UiSelectors.normalButton);
+        this.#buttons.expert = this.getElement(this.UiSelectors.expertButton);
     }
 
 
@@ -85,11 +114,59 @@ class Game extends UI {
         })
     }
 
+    #removeCellsEventListeners() {
+        this.#cellsElements.forEach((element) => {
+            element.removeEventListener('click', this.#handleCellClick);
+            element.removeEventListener('contextmenu', this.#handleCellContextMenu);
+        })
+    }
+
+
+    #addButtonsEventListeners() {
+
+        this.#buttons.easy.addEventListener('click', () =>
+            this.#handleNewGameClick(
+                this.#config.easy.rows,
+                this.#config.easy.cols,
+                this.#config.easy.mines));
+
+        this.#buttons.normal.addEventListener('click', () =>
+            this.#handleNewGameClick(
+                this.#config.normal.rows,
+                this.#config.normal.cols,
+                this.#config.normal.mines));
+
+
+
+        this.#buttons.expert.addEventListener('click', () =>
+            this.#handleNewGameClick(
+                this.#config.expert.rows,
+                this.#config.expert.cols,
+                this.#config.expert.mines));
+
+
+        this.#buttons.reset.element.addEventListener('click', () =>
+            this.#handleNewGameClick());
+
+    }
+
+    #handleNewGameClick(
+        row = this.#numberOfRows,
+        col = this.#numberOfCols,
+        mine = this.#numberOfMines,
+    ) {
+        this.#removeCellsEventListeners();
+        this.#newGame(row, col, mine);
+    }
+
+
     #handleCellClick = (e) => {
         const target = e.target;
         const rowIndex = parseInt(target.getAttribute('data-y'), 10);
         const colIndex = parseInt(target.getAttribute('data-x'), 10);
-        this.#cells[rowIndex][colIndex].revealCell();
+        const cell = this.#cells[rowIndex][colIndex];
+
+        this.#checkIt(cell);
     }
 
 
@@ -102,14 +179,14 @@ class Game extends UI {
 
         const cell = this.#cells[rowIndex][colIndex];
 
-        if (cell.isReveal) return;
+        if (cell.isReveal || this.#isGameFinished) return;
 
         if (cell.isFlagged) {
             this.#counter.increment();
             cell.toggleFlag();
             return;
         }
-        //if value is not equal to zero it gaves true 
+        //Flag's left. If value is not equal to zero it gaves true. 
         if (!!this.#counter.value) {
             this.#counter.decrement();
             cell.toggleFlag();
@@ -117,8 +194,55 @@ class Game extends UI {
 
     };
 
+
+    // --- X - COLUMNS / Y - ROW -----
+
+    #setCellValue(cell) {
+        let minesCount = 0;
+        for (let rowIndex = Math.max(cell.y - 1, 0); rowIndex <= Math.min(cell.y + 1, this.#numberOfRows - 1); rowIndex++) {
+
+            for (let colIndex = Math.max(cell.x - 1, 0); colIndex <= Math.min(cell.x + 1, this.#numberOfCols - 1); colIndex++) {
+                if (this.#cells[rowIndex][colIndex].isMine) minesCount++;
+            }
+
+        }
+        cell.value = minesCount;
+        cell.revealCell();
+        // jeżeli wartość klikniętego pola to false czyli nie ma na nim żadnej miny -rozpocznij wyszukiwanie pustych pól
+        if (!cell.value) {
+            for (let rowIndex = Math.max(cell.y - 1, 0); rowIndex <= Math.min(cell.y + 1, this.#numberOfRows - 1); rowIndex++) {
+
+                for (let colIndex = Math.max(cell.x - 1, 0); colIndex <= Math.min(cell.x + 1, this.#numberOfCols - 1); colIndex++) {
+                    const cell = this.#cells[rowIndex][colIndex];
+                    if (!this.#cells[rowIndex][colIndex].isReveal) {
+                        this.#checkIt(cell);
+                    }
+                }
+
+            }
+        }
+    }
+
+
+
+    // przekazany parametr trzeba zapisać do zmiennej , nie da się przesłać tego samego parametru dalej bez zapisania.
+    #checkIt(cell) {
+        const element = cell;
+        if (cell.isMine) {
+            this.#endGame(false);
+        }
+        if (cell.isFlagged || this.#isGameFinished) return;
+        this.#setCellValue(element)
+    }
+
+    // skorzystano z DESTRUKTURYZACJI OBIEKTU. W filter funkcja strzałkowa szuka właściwości isMine.
+    #revealAllMines() {
+        this.#cells.flat().filter(({ isMine }) => isMine).forEach((cell) => cell.revealCell());
+    }
+
     // generuje komórki w pamięci.
     #generateCells() {
+        this.#cells.length = 0;
         for (let row = 0; row < this.#numberOfRows; row++) {
             this.#cells[row] = []; //create second table dimension
             for (let col = 0; col < this.#numberOfCols; col++) {
@@ -128,6 +252,11 @@ class Game extends UI {
     }
     // create cells and shows on screen
     #renderBoard() {
+        //pętla to wydajny zamiennik zapisu  ---------------    this.#board.innerHTML = "";
+        while (this.#board.firstChild) {
+            this.#board.removeChild(this.#board.lastChild);
+        }
+
         this.#cells.flat().forEach(cell => {
             this.#board.insertAdjacentHTML('beforeend', cell.createElement());
             //przypisujemy wartośc atrybutowi element obiektu cell.
@@ -135,6 +264,29 @@ class Game extends UI {
         })
     }
 
+    #getRandomInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+    #placeMinesInCells() {
+        let minesToPlace = this.#numberOfMines;
+
+        while (minesToPlace) {
+            const rowIndex = this.#getRandomInteger(0, this.#numberOfRows - 1);
+            const colIndex = this.#getRandomInteger(0, this.#numberOfCols - 1);
+
+            const cell = this.#cells[rowIndex][colIndex];
+            // odwołuje się do property is mine w klasie cell. dla komórki która została właśnie wylosowana.
+            const hasCellMine = cell.isMine;
+            if (!hasCellMine) {
+                cell.addMine();
+                minesToPlace--;
+            }
+
+        }
+    }
+    // Właściwości zahaszowane czyli prywatne będą możliwe do ukrycia jedynie w obrębie jednej klasy.
 }
 
 
