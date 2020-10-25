@@ -4,6 +4,7 @@ import { UI } from './UI.js';
 import { Counter } from './Counter.js';
 import { Timer } from './Timer.js';
 import { resetButton } from './resetButton.js';
+import { Modal } from './Modal.js';
 
 class Game extends UI {
     #config = {
@@ -35,24 +36,30 @@ class Game extends UI {
     #cellsElements = null;
     #board = null;
 
-    #counter = new Counter();
-    #Timer = new Timer();
+    #cellsToReveal = 0;
+    #revealedCells = 0;
+
+
+    #counterObject = new Counter();
+    #timerObject = new Timer();
+    #modalObject = new Modal();
+
     #isGameFinished = false;
 
 
     #buttons = {
-        modal: null,
         easy: null,
         medium: null,
         expert: null,
         reset: new resetButton(),
+        modal: null,
     }
 
 
     initializeGame() {
         this.#handleElements();
-        this.#counter.init();
-        this.#Timer.init();
+        this.#counterObject.init();
+        this.#timerObject.init();
         this.#addButtonsEventListeners();
         this.#newGame();
     }
@@ -76,8 +83,13 @@ class Game extends UI {
         this.#numberOfCols = cols;
         this.#numberOfMines = mines;
 
-        this.#counter.setValue(this.#numberOfMines);
-        this.#Timer.resetTimer();
+        this.#isGameFinished = false;
+        this.#revealedCells = 0;
+
+        this.#counterObject.setValue(this.#numberOfMines);
+        this.#timerObject.resetTimer();
+
+        this.#cellsToReveal = this.#numberOfCols * this.#numberOfRows - this.#numberOfMines;
 
         this.#setStyles();
         this.#generateCells();
@@ -86,16 +98,29 @@ class Game extends UI {
 
         this.#cellsElements = this.getElements(this.UiSelectors.cell);
         this.#addCellsEventListeners();
+        this.#buttons.reset.changeEmotion('neutral');
     }
 
 
     #endGame(isWin) {
         this.#isGameFinished = true;
-        this.#Timer.stopTimer();
+        this.#timerObject.stopTimer();
+        this.#modalObject.buttonText = 'Close';
 
+        // przegrana. pamiętaj że bez return program będzie wykonywał się dalej.
         if (!isWin) {
-            this.#revealAllMines()
+            this.#revealAllMines();
+            this.#modalObject.infoText = 'You lost, try again!';
+            this.#buttons.reset.changeEmotion('negative');
+            this.#modalObject.setText();
+            this.#modalObject.toggleModal();
+            return;
         }
+
+        this.#modalObject.infoText = this.#timerObject.numberOfSeconds < this.#timerObject.maxNumberOfSeconds ? `You won, it took you ${this.#timerObject.numberOfSeconds} seconds` : `You spend some time on that game but won,  congrats! `;
+        this.#buttons.reset.changeEmotion('positive');
+        this.#modalObject.setText();
+        this.#modalObject.toggleModal();
     }
 
     #handleElements() {
@@ -123,7 +148,6 @@ class Game extends UI {
 
 
     #addButtonsEventListeners() {
-
         this.#buttons.easy.addEventListener('click', () =>
             this.#handleNewGameClick(
                 this.#config.easy.rows,
@@ -147,6 +171,8 @@ class Game extends UI {
 
         this.#buttons.reset.element.addEventListener('click', () =>
             this.#handleNewGameClick());
+
+        this.#buttons.modal.addEventListener('click', () => this.#modalObject.toggleModal())
 
     }
 
@@ -182,13 +208,13 @@ class Game extends UI {
         if (cell.isReveal || this.#isGameFinished) return;
 
         if (cell.isFlagged) {
-            this.#counter.increment();
+            this.#counterObject.increment();
             cell.toggleFlag();
             return;
         }
         //Flag's left. If value is not equal to zero it gaves true. 
-        if (!!this.#counter.value) {
-            this.#counter.decrement();
+        if (!!this.#counterObject.value) {
+            this.#counterObject.decrement();
             cell.toggleFlag();
         }
 
@@ -208,6 +234,8 @@ class Game extends UI {
         }
         cell.value = minesCount;
         cell.revealCell();
+        this.#revealedCells++;
+
         // jeżeli wartość klikniętego pola to false czyli nie ma na nim żadnej miny -rozpocznij wyszukiwanie pustych pól
         if (!cell.value) {
             for (let rowIndex = Math.max(cell.y - 1, 0); rowIndex <= Math.min(cell.y + 1, this.#numberOfRows - 1); rowIndex++) {
@@ -231,8 +259,15 @@ class Game extends UI {
         if (cell.isMine) {
             this.#endGame(false);
         }
-        if (cell.isFlagged || this.#isGameFinished) return;
+        if (cell.isFlagged || this.#isGameFinished || cell.isReveal) return;
+
+
+        if (this.#revealedCells === this.#cellsToReveal && !this.#isGameFinished) {
+            this.#endGame(true);
+        }
         this.#setCellValue(element)
+
+
     }
 
     // skorzystano z DESTRUKTURYZACJI OBIEKTU. W filter funkcja strzałkowa szuka właściwości isMine.
