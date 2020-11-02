@@ -1,0 +1,122 @@
+/* font-family: 'Roboto', sans-serif; */
+:root {
+    --background-dark: rgb(18, 18, 18);
+    --background-lighter: rgb(30, 30, 30);
+    --primary-color: rgb(176, 107, 241);
+    --secondary-color: rgb(3, 218, 197);
+    --text-color: rgb(213, 213, 213);
+    --delete-color: rgb(207, 102, 121);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Thanks to this setting 1rem is now 10px */
+html {
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-dark);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 100%;
+    height: 10%;
+}
+
+
+.searchbar {
+    border-top: 2px dashed var(--primary-color);
+    border-bottom: 2px dashed var(--primary-color);
+    flex-basis: 20%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.main {
+    border: 2px dashed var(--text-color);
+    flex-basis: 60%;
+    height: 80%;
+}
+
+.info {
+    border-top: 2px dashed var(--secondary-color);
+    border-bottom: 2px dashed var(--secondary-color);
+    flex-basis: 20%;
+    height: 80%;
+}
+
+.bottom {
+    flex-basis: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.title h1 {
+    font-size: 4rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: default;
+}
+
+
+.searchbar label {
+    flex-basis: 15%;
+    border-bottom: 2px dashed var(--primary-color);
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.searchbar label input {
+    width: 80%;
+    margin-right: 5%;
+    font-size: 3rem;
+    background-color: var(--background-lighter);
+    color: var(--secondary-color);
+    border: none;
+    border: 1px solid transparent;
+    padding: 2%;
+    border-radius: 5px;
+    letter-spacing: 2px;
+}
+
+.fa-search {
+    font-size: 3rem;
+    cursor: pointer;
+
+}
+
+.bottom input {
+    flex-basis: 50%;
+    height: 50%;
+    font-size: 3rem;
+    color: var(--primary-color);
+    background-color: var(--background-lighter);
+    color: var(--secondary-color);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 1.5%;
+    letter-spacing: 1px;
+}
