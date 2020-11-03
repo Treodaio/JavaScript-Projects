@@ -1,7 +1,7 @@
 /* font-family: 'Roboto', sans-serif; */
 :root {
     --background-dark: rgb(18, 18, 18);
-    --background-lighter: rgb(30, 30, 30);
+    --background-lighter: rgb(40, 40, 40);
     --primary-color: rgb(176, 107, 241);
     --secondary-color: rgb(3, 218, 197);
     --text-color: rgb(213, 213, 213);
@@ -18,6 +18,27 @@
 html {
     font-size: 62.5%;
     font-family: 'Roboto', sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 30px;
+    color: white;
+    background-color: var(--background-dark);
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+}
+
+/* ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px var(--primary-color);
+    border-radius: 15px;
+} */
+
+
+::-webkit-scrollbar-thumb {
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 15px;
 }
 
 .wrapper {
@@ -53,7 +74,10 @@ html {
     border: 2px dashed var(--text-color);
     flex-basis: 60%;
     height: 80%;
+    overflow-y: scroll;
 }
+
+
 
 .info {
     border-top: 2px dashed var(--secondary-color);
@@ -102,11 +126,72 @@ html {
     letter-spacing: 2px;
 }
 
+.searchbar label input:hover {
+    box-shadow: inset 0 0 5px var(--secondary-color);
+}
+
 .fa-search {
     font-size: 3rem;
     cursor: pointer;
-
 }
+
+.main .tasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main .container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.main .task {
+    width: 78%;
+    background-color: var(--background-lighter);
+    margin-bottom: 1%;
+    margin-left: 2%;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+.main .task:first-child {
+    margin-top: 1%;
+}
+
+.main .task:hover {
+    box-shadow: inset 0 0 15px var(--primary-color);
+}
+
+.main .task p {
+    font-size: 3rem;
+    margin-right: 1%;
+}
+
+.main .deleteBtn {
+    /* problem with button is associated with width */
+    /* text-align: center; */
+    line-height: 1px;
+    margin-left: 2%;
+    flex-direction: 15%;
+    font-size: 2rem;
+    height: 55px;
+    padding: 2%;
+    color: var(--primary-color);
+    background-color: var(--background-lighter);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.main .deleteBtn:hover {
+    background-color: var(--primary-color);
+    color: var(--background-lighter)
+}
+
 
 .bottom input {
     flex-basis: 50%;
@@ -122,22 +207,21 @@ html {
 }
 
 .bottom button {
-    text-transform: uppercase;
     margin-left: 2%;
     height: 50%;
     font-size: 3rem;
     padding: 1.5%;
     line-height: 10%;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    color: var(--background-lighter);
-    background-color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 15px;
+    background-color: var(--background-lighter);
+    color: var(--secondary-color);
     cursor: pointer;
     transition: .3s;
 }
 
 .bottom button:hover {
-    background-color: var(--background-lighter);
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color)
+    border: 1px solid var(--secondary-color);
+    color: var(--background-lighter);
+    background-color: var(--secondary-color);
 }

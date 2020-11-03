@@ -1,21 +1,33 @@
 
 export class Task {
-    // constructor will be necessary. Any of new task must have ours properties.
-
     constructor() {
-        this.taskName = addTask();
+        this.taskName = null;
     }
-    returnTaskName = () => taskName;
+
+    pushNameOfTask = () => this.taskName;
+
+    #border = document.querySelector('[data-allTasks]');
 
     addTask() {
-        const taskText = document.querySelector('[data-addInput]').value;
+        let taskText = document.querySelector('[data-addInput]').value;
+        // document.querySelector('[data-addInput]').value = ""; czyści zawartość inputa
 
         if (taskText == "") {
             return alert('Nie podałeś wartości lub nie została zrozumiana');
         }
-        // call function here named generate task
         this.taskName = taskText;
-        console.log(this.taskName);
+
+        this.#showOnScreen(this.taskName);
+    }
+
+    #generateElement(name) {
+        const element = `<div class = "container"><div class = "task" data-task><p>${name}</p></div> <button class = "deleteBtn" data-deleteButton>Usuń zadanie</button></div>`;
+        return element;
+    }
+
+    #showOnScreen(taskName) {
+        this.#border.insertAdjacentHTML('beforeend', this.#generateElement(taskName));
     }
 
 }
+
