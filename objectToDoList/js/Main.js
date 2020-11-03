@@ -3,11 +3,13 @@ import { Task } from './Task.js';
 
 class Main {
     // constructor() { }
-    taskObject = new Task();
+
     adButton = document.querySelector('[data-addTask]');
 
     init() {
-        this.adButton.addEventListener('click', this.taskObject.addTask);
+        this.adButton.addEventListener('click', () => {
+            this.taskObject = new Task();
+        });
     }
 
 

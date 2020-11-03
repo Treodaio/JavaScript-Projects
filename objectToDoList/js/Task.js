@@ -1,10 +1,10 @@
 
 export class Task {
-
     // constructor will be necessary. Any of new task must have ours properties.
 
-    taskName = null;
-
+    constructor() {
+        this.taskName = addTask();
+    }
     returnTaskName = () => taskName;
 
     addTask() {
