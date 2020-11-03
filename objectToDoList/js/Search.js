@@ -1,19 +1,15 @@
 
 
 export class Search {
-
-
     listOfTasks = [];
-    delButton = null;
-    returnID = () => this.delButton;
 
-    getNewItem(name) {
-        const newName = name;
-        const identifier = this.listOfTasks.length + 1;
-        this.listOfTasks.push({ name, identifier });
+
+    getNewItem(name, ID) {
+        this.listOfTasks.push({ name, ID });
         console.log(this.listOfTasks);
-        this.delButton = identifier;
     }
+
+
 
 
 }

@@ -22,7 +22,7 @@ class Main {
 
             this.taskObject = new Task(this.numbersOfTasks.length);
             this.taskObject.addTask();
-            this.search.getNewItem(this.taskObject.pushNameOfTask());
+            this.search.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
 
         });
 

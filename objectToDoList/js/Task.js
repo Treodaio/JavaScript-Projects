@@ -20,18 +20,24 @@ export class Task {
 
         this.#showOnScreen(this.taskName);
     }
+
     #removeTask(e) {
         e.target.parentNode.remove();
     }
 
+    #showAdditionalInfo(ID) {
+        console.log(`Kliknąłeś w zadanie numerze ${ID}`);
+        
+    }
     #generateElement(name) {
-        const element = `<div class = "container" data-container${this.identify}><div class = "task" data-task><p>${name}</p></div> <button class = "deleteBtn" data-deleteButton${this.identify}>Usuń zadanie</button></div>`;
+        const element = `<div class = "container" data-container${this.identify}><div class = "task" data-task${this.identify}><p>${name}</p></div> <button class = "deleteBtn" data-deleteButton${this.identify}>Usuń zadanie</button></div>`;
         return element;
     }
 
     #showOnScreen(taskName) {
         this.#border.insertAdjacentHTML('beforeend', this.#generateElement(taskName));
         document.querySelector(`[data-deleteButton${this.identify}]`).addEventListener('click', this.#removeTask);
+        document.querySelector(`[data-task${this.identify}]`).addEventListener('click', this.#showAdditionalInfo(this.identify));
     }
 
 }
