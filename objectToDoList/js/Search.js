@@ -1,9 +1,11 @@
 
 
 export class Search {
-    // constructor () {}
-    listOfTasks = [];
 
+
+    listOfTasks = [];
+    delButton = null;
+    returnID = () => this.delButton;
 
     getNewItem(name) {
         const newName = name;

@@ -171,7 +171,7 @@ html {
 }
 
 .main .deleteBtn {
-    /* problem with button is associated with width */
+    /* problem with button is associated with width and stay font-size */
     /* text-align: center; */
     line-height: 1px;
     margin-left: 2%;
