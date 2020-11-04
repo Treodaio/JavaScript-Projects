@@ -15,8 +15,8 @@
         </section>
       
         <aside class="searchbar">
-            <label><input type="text" value = "Szukaj"><i class="fas fa-search"></i></label>
-            <section class="searched">
+            <label><input type="text" value = "Szukaj" data-search><i class="fas fa-search"></i></label>
+            <section class="searched" data-results>
 
             </section>
         </aside>
@@ -28,12 +28,12 @@
         <aside class="info"></aside>
 
         <footer class = "bottom">
-          
-            <input type="text" value = "Dodaj zadanie" data-addInput>
+            <input type="text" value = "Treść zadania"  maxlength='65' data-addInput>
             <button class = "sendTask" data-addTask>Dodaj zadanie</button>
 
         </footer>
     </div>
+   
     <script type = "module" src="js/Main.js"></script>
 </body>
 </html>
