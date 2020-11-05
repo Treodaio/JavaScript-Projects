@@ -21,8 +21,10 @@ export class Search {
         })
     }
 
-    searchForTask(input, tasks) {
-        const userType = input.value.toLowerCase();
+    searchForTask(event, tasks) {
+        const userType = event.target.value.toLowerCase();
+        console.log(userType);
+
         const taskArray = tasks;
         // console.log(taskArray);
 
