@@ -16,12 +16,10 @@ class Main {
     // data-deleteButton${this.identify}
 
     addRemoveListener(that, number) {
-        // const container = btn;
         const self = that;
-
         document.querySelector(`[data-deleteButton${number}]`).addEventListener('click', (event) => {
             self.taskObject.removeTask(event);
-            
+            self.search.removeItem(number);
         })
 
     }
@@ -47,14 +45,16 @@ class Main {
             } else {
                 this.numbersOfTasks.push(this.numbersOfTasks.length);
                 this.taskObject = new Task(this.numbersOfTasks.length);
-                this.taskObject.addTask();
+                const button = this.taskObject.addTask();
                 this.search.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
+                const that = this;
+                this.addRemoveListener(that, this.numbersOfTasks.length);
             }
         });
 
         this.srInput.addEventListener('input', (event) => {
             // this.search.searchForTask(this.srInput, this.search.returnTasks())
-            this.search.searchForTask(event, this.search.returnTasks());
+            this.search.searchForTask(event);
         }
         );
 

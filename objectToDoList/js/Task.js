@@ -6,8 +6,7 @@ export class Task {
     }
     #board = document.querySelector('[data-allTasks]');
 
-    pushRemovedTask = () => this.removedTaskArr;
-
+    // pushRemovedTask = () => this.removedTaskArr;
 
     pushNameOfTask = () => this.taskName;
 
