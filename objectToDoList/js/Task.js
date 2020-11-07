@@ -6,8 +6,6 @@ export class Task {
     }
     #board = document.querySelector('[data-allTasks]');
 
-    // pushRemovedTask = () => this.removedTaskArr;
-
     pushNameOfTask = () => this.taskName;
 
     addTask() {
@@ -32,15 +30,21 @@ export class Task {
         const element = `<div class = "container" data-container${this.identify}><div class = "task" data-task${this.identify}><p>${name}</p></div><button class = "deleteBtn" data-deleteButton${this.identify}>Usuń zadanie</button></div>`;
         return element;
     }
+    #showAdditionalInfo(ID) {
+        console.log(ID);
+    }
+
 
     #showOnScreen(taskName) {
         const button = this.generateElement(taskName);
         this.#board.insertAdjacentHTML('beforeend', this.generateElement(taskName));
-        return button;
 
-        //-- informacje szczegółówe o zadaniu
-        //  ----- document.querySelector(`[data-task${this.identify}]`).addEventListener('click', this.#showAdditionalInfo(this.identify));
+        document.querySelector(`[data-task${this.identify}]`).addEventListener('click', this.#showAdditionalInfo(this.identify));
+
+        return button;
     }
+
+
 
 }
 

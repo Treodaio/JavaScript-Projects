@@ -31,25 +31,27 @@ export class Search {
     }
 
     #showTasks(value) {
+
         const taskArray = value;
         taskArray.forEach(task => {
-            const element = `<div class = "searched" data-searched${task.ID}><p>{${task.name}}</p></div>`;
+            const element = `<div class = "itemSearched" data-searched${task.ID}><p>${task.name}</p></div>`;
             this.#searched.insertAdjacentHTML('beforeend', element);
         })
     }
     // usuń wszystkie elementy wyszukiwania przed kolejnym wyszukiwaniem
-    // #clearTasks() {
-
-    // }
+    #clearTasks() {
+        document.querySelectorAll('.itemSearched').forEach((item, index) => item.remove(index)
+        );
+    }
 
     searchForTask(event) {
-        // this.#clearTasks();
+        this.#clearTasks();
         const userType = event.target.value.toLowerCase();
         // ------KOMENTARZ 1------
         const searchList = this.listOfTasks.filter(item => item.name.toLowerCase().includes(userType));
         this.#showTasks(searchList);
-    }
 
+    }
 
 }
 
