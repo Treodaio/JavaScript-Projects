@@ -1,5 +1,6 @@
 import { Task } from './Task.js';
 import { Search } from './Search.js';
+import { Info } from './Info.js';
 
 
 
@@ -9,6 +10,7 @@ class Main {
     srInput = document.querySelector('[data-search]');
 
     search = new Search();
+    objectInfo = new Info();
 
     // simple solution. Main disadvantage of that is growing memory consuming.
     numbersOfTasks = [];
@@ -29,6 +31,11 @@ class Main {
         // this.adInput.addEventListener('mouseover', () => {
         //     if (this.adInput.value === "Treść zadania") this.adInput.value = "";
         // });
+
+
+        document.querySelector('[data-allTasks]').addEventListener('click', (e) => {
+            console.log(e.target.parentNode);
+        })
 
         this.adButton.addEventListener('click', () => {
             this.numbersOfTasks.push(this.numbersOfTasks.length);

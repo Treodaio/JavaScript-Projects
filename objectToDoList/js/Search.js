@@ -1,7 +1,6 @@
 
 
 export class Search {
-
     listOfTasks = [];
     // returnTasks = () => this.listOfTasks;
     #searched = document.querySelector('[data-results]');
@@ -17,21 +16,17 @@ export class Search {
     #findIndex(value) {
         let index = null;
         index = this.listOfTasks.findIndex(item => (item.ID == value));
-        console.log(index);
         return index;
     }
 
 
     // usuń obiekt w tablicy listOfTasks którym właściwość ID jest równa parametrowi value
     removeItem(value) {
-        this.showTaskArray();
         const index = this.#findIndex(value);
-        console.log(index);
         const element = this.listOfTasks.splice(index, 1);
     }
 
     #showTasks(value) {
-
         const taskArray = value;
         taskArray.forEach(task => {
             const element = `<div class = "itemSearched" data-searched${task.ID}><p>${task.name}</p></div>`;

@@ -62,8 +62,7 @@ html {
 
 
 .searchbar {
-    /* border-top: 2px dashed var(--primary-color); */
-    /* border-bottom: 2px dashed var(--primary-color); */
+    border: 1px solid var(--secondary-color);
     flex-basis: 20%;
     height: 80%;
     display: flex;
@@ -81,8 +80,6 @@ html {
     border-radius: 15px;
 }
 
-
-
 .info {
     flex-basis: 20%;
     height: 80%;
@@ -90,6 +87,7 @@ html {
     background-color: var(--background-medium);
     /* border-bottom: 2px dashed var(--secondary-color); */
     border-radius: 15px;
+    border: 1px solid var(--secondary-color);
 }
 
 .bottom {
@@ -130,6 +128,7 @@ html {
     padding: 2%;
     border-radius: 5px;
     letter-spacing: 2px;
+
 }
 
 .searchbar label input:hover {
@@ -143,7 +142,6 @@ html {
 
 .results {
     height: 100%;
-    border: 2px solid greenyellow;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -185,13 +183,19 @@ html {
     padding: 1%;
     border-radius: 5px;
     word-wrap: break-word;
+    cursor: pointer;
 }
 
 .main .task:first-child {
     margin-top: 1%;
 }
 
-.main .task:hover {
+/* .main .task:hover {
+    color: var(--primary-color);
+    box-shadow: inset 0 0 15px var(--primary-color);
+} */
+
+.addColor {
     color: var(--primary-color);
     box-shadow: inset 0 0 15px var(--primary-color);
 }
