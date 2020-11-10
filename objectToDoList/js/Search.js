@@ -1,8 +1,12 @@
 
 
 export class Search {
+
+
     listOfTasks = [];
-    // returnTasks = () => this.listOfTasks;
+
+    returnTasks = () => this.listOfTasks;
+
     #searched = document.querySelector('[data-results]');
 
     getNewItem(name, ID) {
@@ -45,7 +49,6 @@ export class Search {
         // ------KOMENTARZ 1------
         const searchList = this.listOfTasks.filter(item => item.name.toLowerCase().includes(userType));
         this.#showTasks(searchList);
-
     }
 
 }

@@ -25,7 +25,13 @@
             <div class="tasks" data-allTasks></div>
         </section>
 
-        <aside class="info"></aside>
+        <aside class="info">
+            <!-- ta sekcja będzie domyślnie ukryta za pomocą klasy active która będzie zabierana przy naciśnięciu przycisku -->
+            <section data-active class = "active">
+            <div><h1>Nazwa zadania: </h1><p data-name></p></div>
+            <div><p>Dodaj notatkę</p> <textarea name="additionalInfo" cols="41" rows="10" id = "note"></textarea><button data-addNote>Dodaj</button></div>
+        </section>
+        </aside>
 
         <footer class = "bottom">
             <input type="text" value = "Treść zadania"  maxlength='65' data-addInput>
