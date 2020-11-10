@@ -19,14 +19,18 @@ class Main {
 
     // simple solution. Main disadvantage of that is growing memory consuming.
     numbersOfTasks = [];
-
-    // metody wspole dla search oraz info należy wyekstrachować.
+    // jeżeli wejdziesz na zadanie klikniesz szczegoly a nastepnie usuniesz zadanie to wciaż możesz dodać notatkę - rozwiazanie to wlaczenie klasy active jesli usuwamy klase.
 
 
     addRemoveListener(that, number) {
         const self = that;
         if (document.querySelector(`[data-deleteButton${number}]`) == null) return;
+
+
         document.querySelector(`[data-deleteButton${number}]`).addEventListener('click', (event) => {
+
+            if (!this.leftBoard.classList.contains('active')) this.leftBoard.classList.add('active');
+
             self.taskObject.removeTask(event);
             self.searchObject.removeItem(number);
             self.infoObject.removeNote(number);
@@ -45,8 +49,12 @@ class Main {
             this.numbersOfTasks.push(this.numbersOfTasks.length);
             this.taskObject = new Task(this.numbersOfTasks.length);
             const button = this.taskObject.addTask();
-            this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
+
             const that = this;
+            // this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length); 
+
+            this.searchObject.pushToArray(that.searchObject.listOfTasks, this.numbersOfTasks.length, this.taskObject.pushNameOfTask());
+
             this.addRemoveListener(that, this.numbersOfTasks.length);
         });
 
@@ -58,8 +66,11 @@ class Main {
                 this.numbersOfTasks.push(this.numbersOfTasks.length);
                 this.taskObject = new Task(this.numbersOfTasks.length);
                 const button = this.taskObject.addTask();
-                this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
                 const that = this;
+                // this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
+                this.searchObject.pushToArray(that.listOfTasks, this.numbersOfTasks.length, this.taskObject.pushNameOfTask());
+
+
                 this.addRemoveListener(that, this.numbersOfTasks.length);
             }
         });
@@ -74,8 +85,13 @@ class Main {
         // SHOW INFO
         this.taskBoard.addEventListener('click', (e) => {
             if (e.target.parentNode.classList.contains('container')) return;
-            this.leftBoard.classList.remove('active');
+
             const ID = e.target.parentNode.dataset.task;
+
+            if (ID == undefined) return;
+
+            this.leftBoard.classList.remove('active');
+
 
             this.infoObject.fillTaskArray(this.searchObject.returnTasks());
             this.infoObject.showInfo(ID);

@@ -4,15 +4,9 @@ import { dataFlow } from "./dataFlow.js";
 export class Search extends dataFlow {
 
     listOfTasks = [];
-
     returnTasks = () => this.listOfTasks;
 
     #searched = document.querySelector('[data-results]');
-
-    getNewItem(name, ID) {
-        this.listOfTasks.push({ name, ID });
-    }
-
 
     showTaskArray() {
         console.log(this.listOfTasks);
@@ -28,7 +22,7 @@ export class Search extends dataFlow {
     #showTasks(value) {
         const taskArray = value;
         taskArray.forEach(task => {
-            const element = `<div class = "itemSearched" data-searched${task.ID}><p>${task.name}</p></div>`;
+            const element = `<div class = "itemSearched" data-searched${task.ID}><p>${task.info}</p></div>`;
             this.#searched.insertAdjacentHTML('beforeend', element);
         })
     }
@@ -42,7 +36,7 @@ export class Search extends dataFlow {
         this.#clearTasks();
         const userType = event.target.value.toLowerCase();
         // ------KOMENTARZ 1------
-        const searchList = this.listOfTasks.filter(item => item.name.toLowerCase().includes(userType));
+        const searchList = this.listOfTasks.filter(item => item.info.toLowerCase().includes(userType));
         this.#showTasks(searchList);
     }
 

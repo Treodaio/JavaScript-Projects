@@ -5,9 +5,10 @@ export class dataFlow {
         return index;
     }
 
-    pushToArray(arr, newID, newName) {
-        arr.push({ ID: newID, note: newName });
+    pushToArray(arr, newID, value) {
+        arr.push({ ID: newID, info: value });
         console.log(arr);
-
     }
+
+    // to add - removeItem
 }

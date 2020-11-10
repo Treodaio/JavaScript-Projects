@@ -18,9 +18,7 @@ export class Info extends dataFlow {
     showInfo(ID) {
         let value = ID;
         let index = this.findIndex(ID, this.taskArray);
-
-        const element = this.taskArray[index].name;
-
+        const element = this.taskArray[index].info;
         this.#name.innerHTML = "";
         this.#name.insertAdjacentHTML('beforeend', element);
         this.#activeTask = value;
@@ -50,7 +48,7 @@ export class Info extends dataFlow {
                 const rightID = this.extendTaskInfo[index].ID;
                 if (rightID === this.#activeTask) {
 
-                    this.extendTaskInfo.splice(index, 1, { ID: this.#activeTask, note: text })
+                    this.extendTaskInfo.splice(index, 1, { ID: this.#activeTask, info: text })
                     console.log(this.extendTaskInfo);
                     return;
                 }
