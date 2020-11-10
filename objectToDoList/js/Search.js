@@ -13,12 +13,6 @@ export class Search extends dataFlow {
     }
 
 
-    // usuń obiekt w tablicy listOfTasks którym właściwość ID jest równa parametrowi value
-    removeItem(value) {
-        const index = this.findIndex(value, this.listOfTasks);
-        this.listOfTasks.splice(index, 1);
-    }
-
     #showTasks(value) {
         const taskArray = value;
         taskArray.forEach(task => {
@@ -27,21 +21,21 @@ export class Search extends dataFlow {
         })
     }
     // usuń wszystkie elementy wyszukiwania przed kolejnym wyszukiwaniem
-    #clearTasks() {
+    clearTasks() {
         document.querySelectorAll('.itemSearched').forEach((item, index) => item.remove(index)
         );
     }
 
     searchForTask(event) {
-        this.#clearTasks();
+        this.clearTasks();
         const userType = event.target.value.toLowerCase();
-        // ------KOMENTARZ 1------
+        // comm1
         const searchList = this.listOfTasks.filter(item => item.info.toLowerCase().includes(userType));
         this.#showTasks(searchList);
     }
 
 }
 
-// ------KOMENTARZ 1------
-//interesujący bug. jeżeli dodamy kilka spacji a następnie przeskoczymy do wyrazu i skasujemy go a następnie zaczniemy
+
+//comm1 -----> interesujący bug. jeżeli dodamy kilka spacji a następnie przeskoczymy do wyrazu i skasujemy go a następnie zaczniemy
 //pisać ponownie, powstałe wcześniej spacje uniemożliwią wyszukanie czegokolwiek. Koniecznym byłobuy usuwanie spacji powstałych za ostatnim wyrazem.

@@ -1,7 +1,7 @@
 export class dataFlow {
 
-    findIndex(value, where) {
-        const index = where.findIndex(item => (item.ID == value));
+    findIndex(value, arr) {
+        const index = arr.findIndex(item => (item.ID == value));
         return index;
     }
 
@@ -10,5 +10,9 @@ export class dataFlow {
         console.log(arr);
     }
 
-    // to add - removeItem
+    removeFromArray(arr, value) {
+        const index = this.findIndex(value, arr);
+        arr.splice(index, 1);
+        console.log(arr);
+    }
 }

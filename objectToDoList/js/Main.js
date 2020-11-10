@@ -24,25 +24,28 @@ class Main {
 
     addRemoveListener(that, number) {
         const self = that;
-        if (document.querySelector(`[data-deleteButton${number}]`) == null) return;
 
+        const rmButton = document.querySelector(`[data-deleteButton${number}]`);
 
-        document.querySelector(`[data-deleteButton${number}]`).addEventListener('click', (event) => {
+        if (rmButton == null) return;
 
+        rmButton.addEventListener('click', (event) => {
             if (!this.leftBoard.classList.contains('active')) this.leftBoard.classList.add('active');
 
             self.taskObject.removeTask(event);
-            self.searchObject.removeItem(number);
-            self.infoObject.removeNote(number);
+            console.log(self.searchObject.listOfTasks);
+            console.log(self.infoObject.taskArray);
+            self.searchObject.removeFromArray(self.searchObject.listOfTasks, number);
+            self.infoObject.removeFromArray(self.infoObject.taskArray, number);
         })
 
     }
 
     addListeners() {
         // REMOVE START TEXT ON ADD LABEL 
-        // this.adInput.addEventListener('mouseover', () => {
-        //     if (this.adInput.value === "Treść zadania") this.adInput.value = "";
-        // });
+        this.adInput.addEventListener('click', () => {
+            if (this.adInput.value === "Treść zadania") this.adInput.value = "";
+        });
 
         // ADD TASK
         this.adButton.addEventListener('click', () => {
@@ -51,9 +54,12 @@ class Main {
             const button = this.taskObject.addTask();
 
             const that = this;
-            // this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length); 
 
-            this.searchObject.pushToArray(that.searchObject.listOfTasks, this.numbersOfTasks.length, this.taskObject.pushNameOfTask());
+            this.searchObject.pushToArray(
+                that.searchObject.listOfTasks,
+                this.numbersOfTasks.length,
+                this.taskObject.pushNameOfTask()
+            );
 
             this.addRemoveListener(that, this.numbersOfTasks.length);
         });
@@ -67,8 +73,12 @@ class Main {
                 this.taskObject = new Task(this.numbersOfTasks.length);
                 const button = this.taskObject.addTask();
                 const that = this;
-                // this.searchObject.getNewItem(this.taskObject.pushNameOfTask(), this.numbersOfTasks.length);
-                this.searchObject.pushToArray(that.listOfTasks, this.numbersOfTasks.length, this.taskObject.pushNameOfTask());
+
+                this.searchObject.pushToArray(
+                    that.listOfTasks,
+                    this.numbersOfTasks.length,
+                    this.taskObject.pushNameOfTask()
+                );
 
 
                 this.addRemoveListener(that, this.numbersOfTasks.length);
@@ -77,7 +87,6 @@ class Main {
 
         // SEARCH BAR
         this.srInput.addEventListener('input', (e) => {
-            // this.search.searchForTask(this.srInput, this.search.returnTasks())
             this.searchObject.searchForTask(e);
         }
         );
@@ -87,12 +96,10 @@ class Main {
             if (e.target.parentNode.classList.contains('container')) return;
 
             const ID = e.target.parentNode.dataset.task;
+            if (ID === undefined) return;
 
-            if (ID == undefined) return;
 
             this.leftBoard.classList.remove('active');
-
-
             this.infoObject.fillTaskArray(this.searchObject.returnTasks());
             this.infoObject.showInfo(ID);
         })
