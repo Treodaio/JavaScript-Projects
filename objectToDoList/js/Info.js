@@ -1,11 +1,10 @@
+import { dataFlow } from './dataFlow.js';
 
-
-export class Info {
+export class Info extends dataFlow {
     // name of element - data-name
     // dodawanie tekstu będzie realizowane za pomocą nowej tablicy. Tablica ta będzie zawierać obiekt o 2 właściwościach - wpisanym tekście oraz numerze identyfikującym czyli - data-task / (ID pobierane z taskArray?)
 
     #name = document.querySelector('[data-name]');
-    #rightBoard = document.querySelector('[data-active]');
     #note = document.getElementById('note');
     #activeTask = null;
 
@@ -18,7 +17,7 @@ export class Info {
 
     showInfo(ID) {
         let value = ID;
-        let index = this.#findIndex(ID, this.taskArray);
+        let index = this.findIndex(ID, this.taskArray);
 
         const element = this.taskArray[index].name;
 
@@ -28,10 +27,7 @@ export class Info {
     }
 
 
-    #findIndex(value, where) {
-        const index = where.findIndex(item => (item.ID == value));
-        return index;
-    }
+    //   find index going to 
 
     // w tej metodzie dobrze byłoby skorzystać z metody szukającej indexu - find index.
     addNote(e) {
@@ -42,12 +38,13 @@ export class Info {
 
         // if it is first push to table so table is empty
         if (this.extendTaskInfo.length <= 0) {
-            this.extendTaskInfo.push({ ID: this.#activeTask, note: text })
-            console.log(this.extendTaskInfo);
+
+            this.pushToArray(this.extendTaskInfo, this.#activeTask, text);
+
         } else {    //if table is not empty time for check does we have note on that task ID.)
             // stara wersja bez metody ----> const index = this.extendTaskInfo.findIndex(item => (item.ID == this.#activeTask));
 
-            const index = this.#findIndex(this.#activeTask, this.extendTaskInfo);
+            const index = this.findIndex(this.#activeTask, this.extendTaskInfo);
 
             if (index !== -1) {
                 const rightID = this.extendTaskInfo[index].ID;
@@ -59,8 +56,7 @@ export class Info {
                 }
             } else {
                 //No note found for an ID equal to activeTask. We add ID for this for the first time
-                this.extendTaskInfo.push({ ID: this.#activeTask, note: text })
-                console.log(this.extendTaskInfo);
+                this.pushToArray(this.extendTaskInfo, this.#activeTask, text);
             }
 
         }
@@ -68,7 +64,7 @@ export class Info {
     }
 
     removeNote(value) {
-        const index = this.#findIndex(value, this.extendTaskInfo);
+        const index = this.findIndex(value, this.extendTaskInfo);
         const element = this.extendTaskInfo.splice(index, 1);
         console.log(this.extendTaskInfo);
 

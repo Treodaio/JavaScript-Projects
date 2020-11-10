@@ -1,7 +1,7 @@
+import { dataFlow } from "./dataFlow.js";
 
 
-export class Search {
-
+export class Search extends dataFlow {
 
     listOfTasks = [];
 
@@ -13,21 +13,16 @@ export class Search {
         this.listOfTasks.push({ name, ID });
     }
 
+
     showTaskArray() {
         console.log(this.listOfTasks);
-    }
-
-    #findIndex(value) {
-        let index = null;
-        index = this.listOfTasks.findIndex(item => (item.ID == value));
-        return index;
     }
 
 
     // usuń obiekt w tablicy listOfTasks którym właściwość ID jest równa parametrowi value
     removeItem(value) {
-        const index = this.#findIndex(value);
-        const element = this.listOfTasks.splice(index, 1);
+        const index = this.findIndex(value, this.listOfTasks);
+        this.listOfTasks.splice(index, 1);
     }
 
     #showTasks(value) {

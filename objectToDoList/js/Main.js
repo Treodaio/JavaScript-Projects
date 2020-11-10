@@ -20,7 +20,7 @@ class Main {
     // simple solution. Main disadvantage of that is growing memory consuming.
     numbersOfTasks = [];
 
-    // dobrze byloby dodac klase ktora rozszerzy search.js oraz INFo.js klasa odpowiedzialna za szukanie indeksów oraz puszowanie do tablic.
+    // metody wspole dla search oraz info należy wyekstrachować.
 
 
     addRemoveListener(that, number) {
