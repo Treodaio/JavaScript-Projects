@@ -23,6 +23,7 @@ class Main {
 
 
     addRemoveListener(that, number) {
+
         const self = that;
 
         const rmButton = document.querySelector(`[data-deleteButton${number}]`);
@@ -33,10 +34,9 @@ class Main {
             if (!this.leftBoard.classList.contains('active')) this.leftBoard.classList.add('active');
 
             self.taskObject.removeTask(event);
-            console.log(self.searchObject.listOfTasks);
-            console.log(self.infoObject.taskArray);
             self.searchObject.removeFromArray(self.searchObject.listOfTasks, number);
             self.infoObject.removeFromArray(self.infoObject.taskArray, number);
+            self.infoObject.removeFromArray(self.infoObject.extendTaskInfo, number);
         })
 
     }
@@ -61,6 +61,7 @@ class Main {
                 this.taskObject.pushNameOfTask()
             );
 
+
             this.addRemoveListener(that, this.numbersOfTasks.length);
         });
 
@@ -79,7 +80,7 @@ class Main {
                     this.numbersOfTasks.length,
                     this.taskObject.pushNameOfTask()
                 );
-
+                console.log(this.searchObject.listOfTasks);
 
                 this.addRemoveListener(that, this.numbersOfTasks.length);
             }
@@ -96,12 +97,17 @@ class Main {
             if (e.target.parentNode.classList.contains('container')) return;
 
             const ID = e.target.parentNode.dataset.task;
+
+
+
             if (ID === undefined) return;
-
-
             this.leftBoard.classList.remove('active');
             this.infoObject.fillTaskArray(this.searchObject.returnTasks());
             this.infoObject.showInfo(ID);
+
+            //show note if exists
+            this.infoObject.showNote(ID);
+
         })
 
         // ADD NOTE 

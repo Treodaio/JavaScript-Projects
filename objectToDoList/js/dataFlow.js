@@ -7,12 +7,14 @@ export class dataFlow {
 
     pushToArray(arr, newID, value) {
         arr.push({ ID: newID, info: value });
-        console.log(arr);
     }
 
     removeFromArray(arr, value) {
         const index = this.findIndex(value, arr);
-        arr.splice(index, 1);
-        console.log(arr);
+
+        if (index !== -1) {
+            const removed = arr.splice(index, 1);
+        }
     }
 }
+

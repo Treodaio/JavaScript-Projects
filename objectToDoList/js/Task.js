@@ -25,7 +25,6 @@ export class Task {
 
     removeTask(e) {
         e.target.parentNode.remove();
-
     }
 
     generateElement(name) {

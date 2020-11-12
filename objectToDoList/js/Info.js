@@ -24,12 +24,27 @@ export class Info extends dataFlow {
         this.#activeTask = value;
     }
 
+    showNote(ID) {
+        const index = this.findIndex(ID, this.extendTaskInfo);
+
+        if (index !== -1) {
+            console.log(`Notatka: ${this.extendTaskInfo[index].info}`);
+            const taskNote = this.extendTaskInfo[index].info;
+            this.#note.value = "";
+            this.#note.value += taskNote;
+
+        } else {
+            this.#note.value = "";
+            this.#note.value += `Wpisz notatkę`;
+        }
+
+    }
 
 
     addNote(e) {
         const text = this.#note.value;
         if (text === "") return alert("Nie wpisałeś żadnego tesktu");
-        console.log(this.#activeTask);
+
 
         //  comm1 
         if (this.extendTaskInfo.length <= 0) {
@@ -51,6 +66,8 @@ export class Info extends dataFlow {
             } else {
                 //comm3
                 this.pushToArray(this.extendTaskInfo, this.#activeTask, text);
+                console.log(this.extendTaskInfo);
+
             }
 
         }
