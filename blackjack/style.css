@@ -1,0 +1,117 @@
+body {
+    font-family: 'Bitter', serif;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.2em;
+    display: block;
+    width: 100%;
+    color: #fff;
+    border-bottom: 3px #fff solid;
+    padding-bottom: 5px;
+}
+
+#points {
+    text-align: center;
+    border-top: 3px black solid;
+    border-bottom: 3px black solid;
+    padding: 10px 0px;
+}
+
+#points div {
+    padding-top: 5px;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#blackJack {
+    width: 800px;
+    margin: 20px auto;
+    position: relative;
+}
+
+#table {
+    background-color: green;
+    padding: 100px;
+    border-radius: 100px;
+    border: 3px black solid;
+    margin: 50px 0px;
+}
+
+#playersCards,
+#dealersCards {
+    display: flex;
+    margin-bottom: 30px;
+    min-height: 110px;
+}
+
+.card {
+    font-size: larger;
+    text-align: center;
+    background: #fff;
+    width: 50px;
+    padding: 40px 20px;
+    font-weight: bold;
+    margin-right: 20px;
+    box-shadow: 0.2em 0.2em 0.5em #333;
+    transition: .4s;
+    cursor: default;
+    border-radius: 2px;
+}
+
+.card:hover {
+    box-shadow: 0.2em 0.2em 0.5em #AAA;
+    transform: scale(1.2);
+}
+
+.hearts,
+.diamonds {
+    color: #ff0000;
+}
+
+.spades,
+.clubs {
+    color: #000;
+}
+
+#message {
+    display: none;
+    z-index: 9999;
+    position: absolute;
+    top: 300px;
+    width: 100%;
+    padding: 50px 100px;
+    background-color: rgba(255, 255, 255, 0.95);
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    -webkit-box-shadow: -1px 14px 73px -22px rgba(0, 0, 0, 0.56);
+    -moz-box-shadow: -1px 14px 73px -22px rgba(0, 0, 0, 0.56);
+    box-shadow: -1px 14px 73px -22px rgba(0, 0, 0, 0.56);
+}
+
+#buttons {
+    padding-top: 50px;
+    text-align: center;
+}
+
+#buttons button {
+    cursor: pointer;
+    padding: 10px 30px;
+    border-radius: 30px;
+    background: #000;
+    color: #fff;
+    margin: 0 50px;
+    border: 2px solid black;
+    transition: .5s;
+}
+
+#buttons button:hover {
+    color: #000;
+    background: #fff;
+}
