@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="points">
+        Punkty gracza <div id="playerPoints"></div>
+        Punkty krupiera <div id="dealerPoints"></div>
+    </div>
+
     <section id="blackJack">
         <header>
             <h1>BlackJack</h1>
@@ -19,15 +24,11 @@
             <h2>Karty krupiera</h2>
             <div id="dealersCards"></div>
         </div>
-        <div id="points">
-            Punkty gracza <div id="playerPoints"></div>
-            Punkty krupiera <div id="dealerPoints"></div>
-        </div>
-        <div id="buttons">
-            <button id="hit">Dobierz karty</button>
-            <button id="stand">Zostań</button>
-        </div>
     </section>
+    <div id="buttons">
+        <button id="hit">Dobierz kartę</button>
+        <button id="stand">Zostań</button>
+    </div>
 <script src="js/Game.js" type = "module"></script>
 </body>
 </html>

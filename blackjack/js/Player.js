@@ -9,4 +9,8 @@ export class Player {
         this.hand = new Hand();
     }
 
+    calculatePoints() {
+        this.points = this.hand.getStrength();
+        return this.points;
+    }
 }

@@ -1,10 +1,14 @@
 body {
     font-family: 'Bitter', serif;
+    display: flex;
+    justify-content: center;
+    align-self: center;
 }
 
 h1 {
     text-align: center;
     font-weight: 800;
+
 }
 
 h2 {
@@ -17,19 +21,31 @@ h2 {
 }
 
 #points {
+    flex-basis: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    border-top: 3px black solid;
-    border-bottom: 3px black solid;
     padding: 10px 0px;
 }
 
 #points div {
+    margin-right: 1%;
     padding-top: 5px;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 2.5em;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+}
+
+#points div:first-child {
+    border-bottom: 3px black solid;
+
 }
 
 #blackJack {
+    flex-basis: 50%;
     width: 800px;
     margin: 20px auto;
     position: relative;
@@ -96,17 +112,24 @@ h2 {
 }
 
 #buttons {
+    flex-basis: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding-top: 50px;
     text-align: center;
 }
 
 #buttons button {
+    width: 70%;
+    font-size: 20px;
     cursor: pointer;
-    padding: 10px 30px;
+    padding: 20px 60px;
     border-radius: 30px;
     background: #000;
     color: #fff;
-    margin: 0 50px;
+    margin: 10px 5px;
     border: 2px solid black;
     transition: .5s;
 }
