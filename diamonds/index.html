@@ -14,7 +14,15 @@
                 <button class="start-screen__button start-screen__button--is-settings" id="js-settings-button"></button>
             </div>
             <div class="game__layer level-select hidden" id = "js-level-select-screen"></div>
-    </div>
+            <canvas class="game__layer game-screen hidden" id="js-game-screen"></canvas>
+           
+            <div class="game__layer loading-screen hidden" id="js-loading-screen">
+                <p class="loading-screen__info">  Załadowano <span id="js-loading-screen-current">0</span> z 
+                    <span id="js-loading-screen-total">0</span> elementów gry
+                </p>
+            </div>
+        </div>
+
     <script src="./index.esm.js" type = "module"></script>
 </body>
 </html>
