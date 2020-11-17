@@ -1,5 +1,5 @@
 import { Common } from './Common.esm.js';
-
+import { media } from './Media.esm.js';
 
 const GAME_SCREEN_ID = 'js-game-screen';
 export const CANVAS_WIDTH = 640;
@@ -18,6 +18,25 @@ class Canvas extends Common {
         this.context.font = '20px Arial White';
         this.context.fillStyle = 'white';
     }
+    // przekazujemy tutaj obiekt. points to win powinno być ukryte przed dostepem. 
+    drawGameOnCanvas(gameState) {
+        this.drawBackground();
+
+        this.drawTextOnCanvas(gameState.pointsToWin, 92);
+        this.drawTextOnCanvas(gameState.getPlayerPoints(), 163);
+        this.drawTextOnCanvas(gameState.getLeftMovement(), 234);
+
+    }
+
+    drawBackground() {
+        this.context.drawImage(media.backgroundImage, 0, 0);
+    }
+    // to jest korzystanie z API canvasa. To jego metoda fillText. Liczby obok, to X. Y (położenie na płótnie)
+
+    drawTextOnCanvas(textToWrite, coordinateY) {
+        this.context.fillText(`${textToWrite}`, 520, coordinateY);
+    }
+
 
 }
 

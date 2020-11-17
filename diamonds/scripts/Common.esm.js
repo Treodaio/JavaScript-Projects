@@ -6,6 +6,8 @@ export const VISIBLE_SCREEN = true;
 
 export class Common {
     constructor(elementID) {
+        if (typeof elementID === 'undefined') return;
+       
         this.element = this.bindToElement(elementID);
     }
 

@@ -31,11 +31,11 @@ class Loader extends Common {
     }
 
     itemLoaded(event) {
-        // tajemnicza linia pod spodem
+
         event.target.removeEventListener(event.type, this.itemLoaded, false);
         this.loadedCounter++;
         this.currentElement.textContent = this.loadedCounter;
-
+        //prawdopodobnie this.total_counter 
         if (this.loadedCounter === this.loadedCounter) {
             this.clearFlags();
             this.changeVisibilityScreen(this.element, HIDDEN_SCREEN);
