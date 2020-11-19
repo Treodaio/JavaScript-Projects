@@ -28,23 +28,31 @@ class LevelSelect extends Common {
         button.type = 'button';
         button.classList.add(LEVEL_SELECT_BUTTON_ID);
         button.textContent = level;
-        button.addEventListener('click', event => this.buttonOnclickHandler(event))
-
+        // Z JAKIEGOŚ POWODU EVENT NIE JEST ROZUMIANY PRAWIDŁOWO.
+        button.addEventListener('click', event => this.buttonOnclickHandler(event, level))
         this.element.insertAdjacentElement("beforeend", button);
     }
 
-    buttonOnclickHandler(event) {
-        // odpowiada za ukrycie aktualnego poziomu. pokazujemy canvasa
+
+    // odpowiada za ukrycie aktualnego poziomu. pokazujemy canvasa
+    buttonOnclickHandler(e, level) {
+
         this.changeVisibilityScreen(this.element, HIDDEN_SCREEN);
-        // this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);  // pokaż canvasa. ta jest prawdopdobnie niepotrzebna
-        this.loadLevel(event.currentTarget.value); // załaduj wybrany poziom. 
+        this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);  // pokaż canvasa. ta jest prawdopdobnie niepotrzebna
+
+        // this.loadLevel(e.currentTarget.value); // załaduj wybrany poziom. chwilowo nie działa wczytywanie z currentTarget bo funkcja nie rozumie przesłanego eventu.
+
+
+        this.loadLevel(level); // załaduj wybrany poziom. 
     }
 
 
     loadLevel(level) {
         // korzystamy z settera obiektu media
+        media.diamondsSprite = loader.loadImage('images/diamonds-transparent.png');
         media.backgroundImage = loader.loadImage('images/levelbackground.png');
         this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);
+
         window.addEventListener(DATA_LOADED_EVENT_NAME, () => { game.playLevel(level); })
     }
 

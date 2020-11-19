@@ -64,7 +64,7 @@ body {
     margin-top: 10px;
     padding: 0;
     border: 0;
-    background-image: url(./images/button-start.png);
+    background-image: url('./images/button-start.png');
     background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
@@ -80,11 +80,11 @@ body {
 }
 
 .start-screen__button--is-settings {
-    background-image: url(./images/button-settings.png);
+    background-image: url('./images/button-settings.png');
 }
 
 .start-screen__button--is-settings:hover {
-    background-image: url(./images/button-settings-hover.png);
+    background-image: url('./images/button-settings-hover.png');
 }
 
 .level-select {

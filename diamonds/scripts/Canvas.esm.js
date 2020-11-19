@@ -1,6 +1,7 @@
 import { Common } from './Common.esm.js';
 import { media } from './Media.esm.js';
 
+
 const GAME_SCREEN_ID = 'js-game-screen';
 export const CANVAS_WIDTH = 640;
 export const CANVAS_HEIGHT = 480;
@@ -21,7 +22,6 @@ class Canvas extends Common {
     // przekazujemy tutaj obiekt. points to win powinno być ukryte przed dostepem. 
     drawGameOnCanvas(gameState) {
         this.drawBackground();
-
         this.drawTextOnCanvas(gameState.pointsToWin, 92);
         this.drawTextOnCanvas(gameState.getPlayerPoints(), 163);
         this.drawTextOnCanvas(gameState.getLeftMovement(), 234);

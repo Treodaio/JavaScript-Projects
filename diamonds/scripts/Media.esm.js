@@ -8,6 +8,7 @@ class Media {
     #diamondsSprite = null;
 
     set backgroundImage(imageObject) {
+
         // ustawienie zabezpieczeń przed przypisaniem
         if (!imageObject instanceof Image) {
             console.log('Nie przekazano obrazka do klasy Media.');
@@ -21,6 +22,20 @@ class Media {
     }
 
 
+
+    set diamondsSprite(imageObject) {
+
+        if (!imageObject instanceof Image) {
+            console.log('Nie przekazano obrazka do klasy Media.');
+            return;
+        }
+        this.#diamondsSprite = imageObject;
+
+    }
+
+    get diamondsSprite() {
+        return this.#diamondsSprite;
+    }
 
 
 }

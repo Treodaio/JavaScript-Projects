@@ -23,7 +23,6 @@ class Loader extends Common {
         this.isAllLoaded = false;
         this.totalCounter++;
         this.totalElement = this.totalCounter;
-
         const image = new Image();
         image.src = imageURL;
         image.addEventListener('load', event => this.itemLoaded(event));

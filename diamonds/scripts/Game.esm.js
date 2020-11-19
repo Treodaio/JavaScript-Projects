@@ -1,9 +1,14 @@
-import { Common } from './Common.esm.js';
+import { Common, VISIBLE_SCREEN } from './Common.esm.js';
+import { canvas } from './Canvas.esm.js';
 import { gameLevels } from './gameLevels.esm.js';
 import { DATA_LOADED_EVENT_NAME, loader } from './Loading.esm.js';
-import { canvas } from './Canvas.esm.js';
+import { Diamond } from './Diamonds.esm.js';
+import { media } from './Media.esm.js';
 
-// how to hide properties on object
+export const GAME_BOARD_X_OFFSET = 40;
+export const GAME_BOARD_Y_OFFSET = -5;
+
+// how to hide properties on object using clousures
 const gameState = {
     pointsToWin: 7000,
     getPlayerPoints: () => 1000,
@@ -17,15 +22,17 @@ class Game extends Common {
 
 
     playLevel(level) {
-        window.removeEventListener(DATA_LOADED_EVENT_NAME, this.playLevel, false)
+        window.removeEventListener(DATA_LOADED_EVENT_NAME, this.playLevel)
         // pierwsza plansza ma zerowy index
         const levelInfo = gameLevels[level - 1];
+        this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);
+        this.diamond = new Diamond(50, 50, 1, 1, 1, media.diamondsSprite);
         this.animate();
     }
 
     animate() {
-        console.log('Lets game!');
         canvas.drawGameOnCanvas(gameState);
+        this.diamond.draw();
         this.animationFrame = window.requestAnimationFrame(() => this.animate());
     }
 }
