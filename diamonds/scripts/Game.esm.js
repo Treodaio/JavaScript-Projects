@@ -18,6 +18,7 @@ const gameState = {
 class Game extends Common {
     constructor() {
         super();
+
     }
 
 
@@ -26,7 +27,7 @@ class Game extends Common {
         // pierwsza plansza ma zerowy index
         const levelInfo = gameLevels[level - 1];
         this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);
-        this.diamond = new Diamond(50, 50, 1, 1, 1, media.diamondsSprite);
+        this.diamond = new Diamond(50, 50, 1, 1, 2, media.diamondsSprite);
         this.animate();
     }
 

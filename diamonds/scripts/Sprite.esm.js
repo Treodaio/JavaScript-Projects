@@ -13,7 +13,7 @@ export class Sprite {
         this.numberOfSprites = numberOfSprites;
     }
 
-    // powiększenie obrazka - ratio
+
     draw(numberOfSprites = 0, ratio = 1) {
         if (numberOfSprites > this.numberOfSprites) return;
 

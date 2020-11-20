@@ -2,10 +2,10 @@
 
 class Media {
     constructor() {
-
+        this._backgroundImage = null;
+        this._diamondsSprite = null;
     }
-    #backgroundImage = null;
-    #diamondsSprite = null;
+
 
     set backgroundImage(imageObject) {
 
@@ -14,11 +14,11 @@ class Media {
             console.log('Nie przekazano obrazka do klasy Media.');
             return;
         }
-        this.#backgroundImage = imageObject;
+        this._backgroundImage = imageObject;
     }
 
     get backgroundImage() {
-        return this.#backgroundImage;
+        return this._backgroundImage;
     }
 
 
@@ -29,12 +29,12 @@ class Media {
             console.log('Nie przekazano obrazka do klasy Media.');
             return;
         }
-        this.#diamondsSprite = imageObject;
+        this._diamondsSprite = imageObject;
 
     }
 
     get diamondsSprite() {
-        return this.#diamondsSprite;
+        return this._diamondsSprite;
     }
 
 
