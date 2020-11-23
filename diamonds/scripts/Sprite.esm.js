@@ -20,11 +20,10 @@ export class Sprite {
         if (this.alpha !== 255) {
             canvas.context.globalAlpha = this.alpha / 255;
         }
-        // offset - o ile element ma się przesunąć od początku CANVASA
-        // image ,sx, sy, swidth, sheight, dx ,dy, dwidth, dheight
+
         canvas.context.drawImage(
             this.spritesImage,
-            this.numberOfSprites * this.width,
+            numberOfSprites * this.width,
             0,
             this.width,
             this.height,

@@ -33,7 +33,7 @@ class MainMenu extends Common {
 
     showLevelScreen() {
         this.changeVisibilityScreen(this.element, HIDDEN_SCREEN);
-        this.changeVisibilityScreen(this.#levelSelect.element, VISIBLE_SCREEN);
+        this.changeVisibilityScreen(levelSelect.element, VISIBLE_SCREEN);
     }
 
     showSettingsScreen() {

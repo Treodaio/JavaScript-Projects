@@ -2,9 +2,10 @@ import { Common } from './Common.esm.js';
 import { media } from './Media.esm.js';
 
 
-const GAME_SCREEN_ID = 'js-game-screen';
 export const CANVAS_WIDTH = 640;
 export const CANVAS_HEIGHT = 480;
+
+const GAME_SCREEN_ID = 'js-game-screen';
 
 class Canvas extends Common {
     constructor() {
@@ -12,7 +13,7 @@ class Canvas extends Common {
         this.configureCanvas();
     }
     configureCanvas() {
-        // sprawdź czy ta metoda powstanie później
+
         this.context = this.element.getContext('2d');
         this.context.canvas.width = CANVAS_WIDTH;
         this.context.canvas.height = CANVAS_HEIGHT;
