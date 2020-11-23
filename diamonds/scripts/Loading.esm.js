@@ -1,11 +1,10 @@
 import { Common, VISIBLE_SCREEN, HIDDEN_SCREEN } from './Common.esm.js';
 
+export const DATALOADED_EVENT_NAME = 'dataLoaded';
+
 const LOADER_ELEMENT_ID = 'js-loading-screen';
 const LOAD_CURRENT_ID = 'js-loading-screen-current';
 const LOAD_TOTAL_ID = 'js-loading-screen-total';
-
-export const DATALOADED_EVENT_NAME = 'dataLoaded';
-
 class Loader extends Common {
     constructor() {
         super(LOADER_ELEMENT_ID);
@@ -18,16 +17,14 @@ class Loader extends Common {
         this.totalElement = this.bindToElement(LOAD_TOTAL_ID);
     }
 
-    loadImage(imageUrl) {
+    loadImage(imageURL) {
         this.changeVisibilityScreen(this.element, VISIBLE_SCREEN);
         this.isAllLoaded = false;
         this.totalCounter++;
         this.totalElement = this.totalCounter;
         const image = new Image();
-
-        image.src = imageUrl;
+        image.src = imageURL;
         image.addEventListener('load', event => this.itemLoaded(event), false);
-
         return image;
     }
 

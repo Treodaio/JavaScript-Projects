@@ -34,19 +34,18 @@ class LevelSelect extends Common {
     }
 
 
-    // odpowiada za ukrycie aktualnego poziomu. pokazujemy canvasa
+
     buttonOnclickHandler(event) {
         this.changeVisibilityScreen(this.element, HIDDEN_SCREEN);
-        this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);  // pokaż canvasa. ta jest prawdopdobnie niepotrzebna
+        // this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);
         this.loadLevel(event.currentTarget.value);
     }
 
 
     loadLevel(level) {
-        // korzystamy z settera obiektu media
+        // using of media setter
         media.diamondsSprite = loader.loadImage('images/diamonds-transparent.png');
         media.backgroundImage = loader.loadImage('images/levelbackground.png');
-
 
         this.changeVisibilityScreen(canvas.element, VISIBLE_SCREEN);
         window.addEventListener(DATALOADED_EVENT_NAME, () => game.playLevel(level));

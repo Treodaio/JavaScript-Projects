@@ -6,7 +6,7 @@ export class GameState {
         let _leftMovement = leftMovement;
         let _playerScores = 0;
 
-        // mapowanie tablicy razem z destrukturyzacja
+        // mapowanie tablicy razem z destrukturyzacją pierwszego parametru
         let _gameBoard = diamonds.map(({ x, y, row, column, kind }) => new Diamond(x, y, row, column, kind, diamondsSpriteImage));
 
         this._level = level;
@@ -21,7 +21,6 @@ export class GameState {
         this.getGameBoard = () => _gameBoard;
 
     }
-
 
     get level() {
         return this._level;

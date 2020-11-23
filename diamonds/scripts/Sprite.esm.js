@@ -37,6 +37,5 @@ export class Sprite {
             canvas.context.globalAlpha = 1;
         }
 
-
     }
 }

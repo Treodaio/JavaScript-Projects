@@ -2,7 +2,6 @@ import { Common, HIDDEN_SCREEN, VISIBLE_SCREEN } from './Common.esm.js';
 import { levelSelect } from './LevelSelect.esm.js';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from './Canvas.esm.js';
 
-// ----------> com1 <---------
 const START_SCREEN_ID = 'js-start-screen';
 const START_SCREEN_GAME_BUTTON_ID = 'js-start-game';
 const START_SCREEN_SETTINGS_BUTTON_ID = 'js-settings-button';
@@ -17,10 +16,6 @@ class MainMenu extends Common {
         window.addEventListener('resize', this.resizeGameWindow);
 
     }
-    // prywatna properta do której przypisujemy obiekt odziedziczony z importa. 
-    // Za jego pomocą mamy dostęp do metod tej klasy.
-
-    #levelSelect = levelSelect;
 
     bindToGameElements() {
         const gameStartButton = this.bindToElement(START_SCREEN_GAME_BUTTON_ID);
@@ -49,12 +44,3 @@ class MainMenu extends Common {
 }
 
 export const mainMenu = new MainMenu();
-
-
-
-
-
-
-// ----------> com1 <---------
-// końcówka jest częścią umownej konwencji -- _ID to informacja o ID
-// _SELECTOR czyli to co się tam znajduje ma przedrostek #. Do wykorzystywania w uchwytach itd.. 

@@ -1,7 +1,6 @@
 import { Common } from './Common.esm.js';
 import { media } from './Media.esm.js';
 
-
 export const CANVAS_WIDTH = 640;
 export const CANVAS_HEIGHT = 480;
 
@@ -20,7 +19,7 @@ class Canvas extends Common {
         this.context.font = '20px Arial White';
         this.context.fillStyle = 'white';
     }
-    // przekazujemy tutaj obiekt. points to win powinno być ukryte przed dostepem. 
+
     drawGameOnCanvas(gameState) {
         this.drawBackground();
         this.drawTextOnCanvas(gameState.pointsToWin, 92);
@@ -32,7 +31,6 @@ class Canvas extends Common {
     drawBackground() {
         this.context.drawImage(media.backgroundImage, 0, 0);
     }
-    // to jest korzystanie z API canvasa. To jego metoda fillText. Liczby obok, to X. Y (położenie na płótnie)
 
     drawTextOnCanvas(textToWrite, coordinateY) {
         this.context.fillText(`${textToWrite}`, 520, coordinateY);
@@ -43,6 +41,3 @@ class Canvas extends Common {
 
 
 export const canvas = new Canvas();
-
-
-// potencjalne ulepszenie - możliwe byłoby dodanie obiektu klasy konfiguracyjnej której właściwości moglibyśmy pobrać i przypisać do canvasa.

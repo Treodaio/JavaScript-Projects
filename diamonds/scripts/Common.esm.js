@@ -2,12 +2,9 @@ export const HIDDEN_CLASS = 'hidden';
 export const HIDDEN_SCREEN = false;
 export const VISIBLE_SCREEN = true;
 
-// common js potrzebne jest każdej klasie która pracuje z elementem html - np. zmienia go. jeśli tak nie jest to nie musi z niego dziedziczyć
-
 export class Common {
     constructor(elementID) {
         if (typeof elementID === 'undefined') return;
-       
         this.element = this.bindToElement(elementID);
     }
 

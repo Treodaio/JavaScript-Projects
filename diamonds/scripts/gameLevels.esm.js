@@ -2,9 +2,7 @@ import { DIAMOND_SIZE } from './Diamonds.esm.js';
 
 export const GAME_BOARD_X_OFFSET = 40;
 export const GAME_BOARD_Y_OFFSET = 20;
-
 export const EMPTY_BLOCK = 99;
-// level służy tutaj jako identyfikator każdego z obiektów. dzięki temu wiemy który obiekt wyciągnąć podczas generowania planszy w game.play level
 export const gameLevels = [
     {
         level: 1,
