@@ -1,7 +1,7 @@
 import { DIAMOND_SIZE } from './Diamonds.esm.js';
 
 export const GAME_BOARD_X_OFFSET = 40;
-export const GAME_BOARD_Y_OFFSET = 20;
+export const GAME_BOARD_Y_OFFSET = 1;
 export const EMPTY_BLOCK = 99;
 export const gameLevels = [
     {

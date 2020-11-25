@@ -5,7 +5,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT } from './Canvas.esm.js';
 const START_SCREEN_ID = 'js-start-screen';
 const START_SCREEN_GAME_BUTTON_ID = 'js-start-game';
 const START_SCREEN_SETTINGS_BUTTON_ID = 'js-settings-button';
-const SCALE_PROPERTY = '--scale-value';
+export const SCALE_PROPERTY = '--scale-value';
 
 
 class MainMenu extends Common {

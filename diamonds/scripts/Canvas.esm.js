@@ -11,8 +11,8 @@ class Canvas extends Common {
         super(GAME_SCREEN_ID);
         this.configureCanvas();
     }
-    configureCanvas() {
 
+    configureCanvas() {
         this.context = this.element.getContext('2d');
         this.context.canvas.width = CANVAS_WIDTH;
         this.context.canvas.height = CANVAS_HEIGHT;
