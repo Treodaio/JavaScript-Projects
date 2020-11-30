@@ -1,5 +1,11 @@
 import { Common, VISIBLE_SCREEN } from './Common.esm.js';
-import { gameLevels, GAME_BOARD_X_OFFSET, GAME_BOARD_Y_OFFSET } from './gameLevels.esm.js';
+import {
+    EMPTY_BLOCK,
+    gameLevels,
+    GAME_BOARD_X_OFFSET,
+    GAME_BOARD_Y_OFFSET
+} from './gameLevels.esm.js';
+
 import { DATALOADED_EVENT_NAME } from './Loading.esm.js';
 import { canvas } from './Canvas.esm.js';
 import { media } from './Media.esm.js';
@@ -10,7 +16,10 @@ import { DIAMOND_SIZE } from './Diamonds.esm.js';
 
 const DIAMONDS_ARRAY_WIDTH = 8;
 const DIAMONDS_ARRAY_HEIGHT = DIAMONDS_ARRAY_WIDTH + 1 // with invisible first line
+const LAST_ELEMENT_DIAMONDS_ARRAY = DIAMONDS_ARRAY_WIDTH * DIAMONDS_ARRAY_HEIGHT - 1;
 const SWAPING_SPEED = 8;
+
+
 class Game extends Common {
     constructor() {
         super();
@@ -27,8 +36,11 @@ class Game extends Common {
     animate() {
         this.handleMouseState();
         this.handleMouseClick();
+        this.findMatches();
         this.moveDiamonds();
+        this.countScores();
         this.revertSwap();
+        this.clearMatched();
         canvas.drawGameOnCanvas(this.gameState);
         this.gameState.getGameBoard().forEach(diamond => diamond.draw());
         this.animationFrame = window.requestAnimationFrame(() => this.animate());
@@ -44,20 +56,20 @@ class Game extends Common {
     }
 
     handleMouseClick() {
-        // sprawdzamy czy uzytkownik kliknął w myszkę. Nie ma sensu żeby program robił obliczenia jeśli nie zostało kliknięte.
         if (!mouseController.clicked) return;
 
-        // obliczamy x oraz y miejsca klikniętego w canvasie potencjalnie naszego diamentu
         const xClicked = Math.floor((mouseController.x - GAME_BOARD_X_OFFSET) / DIAMOND_SIZE);
         const yClicked = Math.floor((mouseController.y - GAME_BOARD_Y_OFFSET) / DIAMOND_SIZE);
 
-        // czy klikneliśmy w diament ? 
-        if (!yClicked || xClicked >= DIAMONDS_ARRAY_WIDTH || yClicked >= DIAMONDS_ARRAY_HEIGHT) {
+        // we click on diamond ? 
+        if (xClicked >= DIAMONDS_ARRAY_WIDTH || yClicked >= DIAMONDS_ARRAY_HEIGHT || xClicked < 0 || !yClicked) {
             mouseController.state = 0;
             return;
         }
 
-        // dodawanie dynamicznie property do klasy. Zapisanie klikniętego diamentu
+
+
+        // dynamic add properties to mouseController.
         if (mouseController.state === 1) {
             mouseController.firstClick = {
                 x: xClicked,
@@ -71,7 +83,7 @@ class Game extends Common {
             mouseController.state = 0;
 
 
-            // sprawdzanie czy klocki są sąsiadujące na osi x albo  y. Jeśli !== 1 to nie są
+            // ---> comm1
             if (
                 Math.abs(mouseController.firstClick.x - mouseController.secondClick.x) +
                 Math.abs(mouseController.firstClick.y - mouseController.secondClick.y) !== 1
@@ -79,7 +91,6 @@ class Game extends Common {
                 return;
             }
             this.swapDiamonds();
-
             this.gameState.setIsSwaping(true);
             this.gameState.decreasePointsMovement();
             mouseController.state = 0;
@@ -89,14 +100,47 @@ class Game extends Common {
     }
 
 
-    swapDiamonds() {
-        // mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH; - docieramy do konkretnego wiersza
-        const firstDiamond = mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.firstClick.x;
-        const secondDiamond = mouseController.secondClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.secondClick.x;
 
-        this.swap(this.gameState.getGameBoard()[firstDiamond], this.gameState.getGameBoard()[secondDiamond]);
+    findMatches() {
+        this.gameState.getGameBoard().forEach((diamond, index, diamonds) => {
+            //Are we not dealing with hidden block of diamonds 
+            if (diamond.kind === EMPTY_BLOCK || index < DIAMONDS_ARRAY_WIDTH || index === LAST_ELEMENT_DIAMONDS_ARRAY) {
+                return;
+            }
+            if (
+                diamonds[index - 1].kind === diamond.kind
+                && diamonds[index + 1].kind === diamond.kind
+            ) {
+                // czy te diamenty są w tym samym wierszu? 
+                if ((Math.floor(index - 1) / DIAMONDS_ARRAY_WIDTH)
+                    === Math.floor((index + 1) / DIAMONDS_ARRAY_WIDTH)) {
+
+                    for (let i = -1; i <= 1; i++) {
+                        diamonds[index + i].match++;
+                    }
+                }
+            }
+            // checking match for column
+            if (
+                index >= DIAMONDS_ARRAY_WIDTH &&
+                index < LAST_ELEMENT_DIAMONDS_ARRAY - DIAMONDS_ARRAY_WIDTH + 1 &&
+                diamonds[index - DIAMONDS_ARRAY_WIDTH].kind == diamond.kind &&
+                diamonds[index + DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
+            ) {
+                if (
+                    (index - DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH ===
+                    (index + DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH
+                ) {
+                    for (let i = DIAMONDS_ARRAY_WIDTH; i <= DIAMONDS_ARRAY_WIDTH; i += DIAMONDS_ARRAY_WIDTH) {
+                        diamonds[index + i].match++;
+                    }
+                }
+
+            }
+        })
 
     }
+
 
     moveDiamonds() {
         this.gameState.setIsMoving(false);
@@ -104,10 +148,11 @@ class Game extends Common {
             let dx;
             let dy;
 
+            // if dx !==0 return true
+
             for (let speedSwap = 0; speedSwap < SWAPING_SPEED; speedSwap++) {
                 dx = diamond.x - diamond.row * DIAMOND_SIZE;
                 dy = diamond.y - diamond.column * DIAMOND_SIZE;
-
                 if (dx) {
                     diamond.x -= dx / Math.abs(dx);
                 }
@@ -116,7 +161,7 @@ class Game extends Common {
                     diamond.y -= dy / Math.abs(dy);
                 }
             }
-            // po wykonaniu pętli sprawdzamy czy jest przesunięcie
+            // when loop ends check for shift
             if (dx || dy) {
                 this.gameState.setIsMoving(true);
             }
@@ -124,19 +169,41 @@ class Game extends Common {
         });
     }
 
-    revertSwap() {
-        // jeżeli są w trakcie wymiany ale już się nie poruszają
-        if (this.gameState.getIsSwaping() && !this.gameState.getIsMoving()) {
-            // if (!this.scores) {
-            //     this.swapDiamonds();
-            //     this.gameState.increasePlayerPointsMovement();
-            // }
+    countScores() {
+        this.scores = 0;
+        this.gameState.getGameBoard().forEach(diamond => this.scores += diamond.match);
 
-            // nie ma punktów 
+        if (!this.gameState.getIsMoving() && this.scores) {
+            this.gameState.increasePlayerPoints(this.scores);
+        }
+    }
+
+
+
+
+    swapDiamonds() {
+        // mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH; - we reach a specific row - first row - 8 diamond,  second row - 16 diamond etc..
+        const firstDiamond = mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.firstClick.x;
+        const secondDiamond = mouseController.secondClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.secondClick.x;
+
+        this.swap(this.gameState.getGameBoard()[firstDiamond], this.gameState.getGameBoard()[secondDiamond]);
+    }
+
+
+    revertSwap() {
+        if (this.gameState.getIsSwaping() && !this.gameState.getIsMoving()) {
+            if (!this.scores) {
+                this.swapDiamonds();
+                this.gameState.increasePlayerPointsMovement();
+            }
+            // no points.
             this.gameState.setIsSwaping(false);
         }
     }
 
+    clearMatched() { }
+
+    // it's reference. We change the original table
     swap(firstDiamond, secondDiamond) {
         [
             firstDiamond.kind,
@@ -163,9 +230,17 @@ class Game extends Common {
                 firstDiamond.x,
                 firstDiamond.y,
             ];
-        // dopóki dwa diamenty nie zamienią się miejscami nie powinniśmy móc się ruszyć
+        // Pause game until the diamonds change places
         this.gameState.setIsMoving(true);
     }
 }
 
-export const game = new Game(); 
+export const game = new Game();
+
+
+
+
+
+
+
+ // comm1 ---> checking if diamonds are not adjacent to each other on the x or y axis

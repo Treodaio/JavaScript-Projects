@@ -17,6 +17,8 @@ export const gameLevels = [
             { x: 0 * DIAMOND_SIZE, y: -1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 5, column: 0, kind: EMPTY_BLOCK, },
             { x: 0 * DIAMOND_SIZE, y: -1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 6, column: 0, kind: EMPTY_BLOCK, },
             { x: 0 * DIAMOND_SIZE, y: -1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 7, column: 0, kind: EMPTY_BLOCK, },
+
+
             { x: 0 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 0, column: 1, kind: 1, },
             { x: 1 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 1, column: 1, kind: 1, },
             { x: 2 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 2, column: 1, kind: 0, },
@@ -25,6 +27,8 @@ export const gameLevels = [
             { x: 5 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 5, column: 1, kind: 5, },
             { x: 6 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 6, column: 1, kind: 5, },
             { x: 7 * DIAMOND_SIZE, y: 0 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 7, column: 1, kind: 3, },
+
+
             { x: 0 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 0, column: 2, kind: 0, },
             { x: 1 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 1, column: 2, kind: 0, },
             { x: 2 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 2, column: 2, kind: 1, },
@@ -33,6 +37,8 @@ export const gameLevels = [
             { x: 5 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 5, column: 2, kind: 1, },
             { x: 6 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 6, column: 2, kind: 1, },
             { x: 7 * DIAMOND_SIZE, y: 1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 7, column: 2, kind: 2, },
+
+
             { x: 0 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 0, column: 3, kind: 0, },
             { x: 1 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 1, column: 3, kind: 4, },
             { x: 2 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 2, column: 3, kind: 4, },
@@ -40,6 +46,8 @@ export const gameLevels = [
             { x: 4 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 4, column: 3, kind: 5, },
             { x: 5 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 5, column: 3, kind: 2, },
             { x: 6 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 6, column: 3, kind: 2, },
+
+
             { x: 7 * DIAMOND_SIZE, y: 2 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 7, column: 3, kind: 5, },
             { x: 0 * DIAMOND_SIZE, y: 3 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 0, column: 4, kind: 4, },
             { x: 1 * DIAMOND_SIZE, y: 3 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 1, column: 4, kind: 3, },

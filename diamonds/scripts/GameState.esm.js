@@ -9,7 +9,7 @@ export class GameState {
         let _isSwaping = false;
         let _isMoving = false;
 
-        // mapowanie tablicy razem z destrukturyzacją pierwszego parametru
+        // map table with destructuring first parameter
         let _gameBoard = diamonds.map(({ x, y, row, column, kind }) => new Diamond(x, y, row, column, kind, diamondsSpriteImage));
 
         this._level = level;

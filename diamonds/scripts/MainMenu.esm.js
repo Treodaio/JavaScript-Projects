@@ -36,7 +36,7 @@ class MainMenu extends Common {
     }
 
     resizeGameWindow() {
-        // destrukturyzacja
+
         const { innerWidth: width, innerHeight: height } = window;
         const scale = Math.min(width / CANVAS_WIDTH, height / CANVAS_HEIGHT);
         document.documentElement.style.setProperty(SCALE_PROPERTY, scale);

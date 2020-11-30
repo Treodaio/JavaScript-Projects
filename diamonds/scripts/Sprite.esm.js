@@ -5,12 +5,12 @@ export class Sprite {
     constructor(x, y, width, height, spritesImage, numberOfSprites = 1, offset = { x: 0, y: 0 }) {
         this.x = x;
         this.y = y;
-        this.alpha = 255;
         this.width = width;
         this.height = height;
         this.offset = { ...offset };
         this.spritesImage = spritesImage;
         this.numberOfSprites = numberOfSprites;
+        this.alpha = 255;
     }
 
 
