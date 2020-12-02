@@ -11,7 +11,7 @@ import { canvas } from './Canvas.esm.js';
 import { media } from './Media.esm.js';
 import { GameState } from './GameState.esm.js';
 import { mouseController } from './MouseController.esm.js';
-import { DIAMOND_SIZE } from './Diamonds.esm.js';
+import { DIAMOND_SIZE, NUMBER_OF_DIAMONDS_TYPES } from './Diamonds.esm.js';
 
 
 const DIAMONDS_ARRAY_WIDTH = 8;
@@ -84,12 +84,14 @@ class Game extends Common {
 
 
             // ---> comm1
+
             if (
                 Math.abs(mouseController.firstClick.x - mouseController.secondClick.x) +
                 Math.abs(mouseController.firstClick.y - mouseController.secondClick.y) !== 1
             ) {
                 return;
             }
+
             this.swapDiamonds();
             this.gameState.setIsSwaping(true);
             this.gameState.decreasePointsMovement();
@@ -111,9 +113,8 @@ class Game extends Common {
                 diamonds[index - 1].kind === diamond.kind
                 && diamonds[index + 1].kind === diamond.kind
             ) {
-                // czy te diamenty są w tym samym wierszu? 
-                if ((Math.floor(index - 1) / DIAMONDS_ARRAY_WIDTH)
-                    === Math.floor((index + 1) / DIAMONDS_ARRAY_WIDTH)) {
+                // Checking -- This diamonds are on the same row? 
+                if (Math.floor((index - 1) / DIAMONDS_ARRAY_WIDTH) === Math.floor((index + 1) / DIAMONDS_ARRAY_WIDTH)) {
 
                     for (let i = -1; i <= 1; i++) {
                         diamonds[index + i].match++;
@@ -122,10 +123,10 @@ class Game extends Common {
             }
             // checking match for column
             if (
-                index >= DIAMONDS_ARRAY_WIDTH &&
-                index < LAST_ELEMENT_DIAMONDS_ARRAY - DIAMONDS_ARRAY_WIDTH + 1 &&
-                diamonds[index - DIAMONDS_ARRAY_WIDTH].kind == diamond.kind &&
-                diamonds[index + DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
+                index >= DIAMONDS_ARRAY_WIDTH
+                && index < LAST_ELEMENT_DIAMONDS_ARRAY - DIAMONDS_ARRAY_WIDTH + 1
+                && diamonds[index - DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
+                && diamonds[index + DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
             ) {
                 if (
                     (index - DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH ===
@@ -135,9 +136,8 @@ class Game extends Common {
                         diamonds[index + i].match++;
                     }
                 }
-
             }
-        })
+        });
 
     }
 
@@ -192,16 +192,58 @@ class Game extends Common {
 
     revertSwap() {
         if (this.gameState.getIsSwaping() && !this.gameState.getIsMoving()) {
+
             if (!this.scores) {
                 this.swapDiamonds();
-                this.gameState.increasePlayerPointsMovement();
+                this.gameState.increasePointsMovement();
             }
             // no points.
             this.gameState.setIsSwaping(false);
         }
     }
 
-    clearMatched() { }
+    clearMatched() {
+        if (this.gameState.getIsMoving()) {
+            return;
+        }
+
+        // now table is checked from bottom to top.
+        this.gameState.getGameBoard().forEach((_, idx, diamonds) => {
+            const index = diamonds.length - 1 - idx;
+            const column = Math.floor(index / DIAMONDS_ARRAY_WIDTH);
+            const row = Math.floor(index % DIAMONDS_ARRAY_WIDTH);
+
+            // zrzucanie diamentów w dół.
+            if (diamonds[index].match) {
+                for (let counter = column; counter >= 0; counter--) {
+                    // checking for match in specific place
+
+                    // if is correct when math is equal to zero
+                    if (!diamonds[counter * DIAMONDS_ARRAY_WIDTH + row].match) {
+                        this.swap(diamonds[counter * DIAMONDS_ARRAY_WIDTH + row], diamonds[index]);
+                        break;
+                    }
+                }
+            }
+        });
+
+        // wymiana wyrzuconych klocków na nowe.
+        this.gameState.getGameBoard().forEach((diamond, index) => {
+            const row = Math.floor(index % DIAMONDS_ARRAY_WIDTH) * DIAMOND_SIZE;
+
+            if (index < DIAMONDS_ARRAY_WIDTH) {
+                diamond.kind = EMPTY_BLOCK;
+                diamond.match = 0;
+            } else if (diamond.match || diamond.kind === EMPTY_BLOCK) {
+                diamond.kind = Math.floor(Math.random() * NUMBER_OF_DIAMONDS_TYPES);
+                diamond.y = 0;
+                diamond.x = row;
+                diamond.match = 0;
+                diamond.alpha = 255;
+            }
+
+        });
+    }
 
     // it's reference. We change the original table
     swap(firstDiamond, secondDiamond) {
