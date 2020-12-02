@@ -6,8 +6,8 @@ export const EMPTY_BLOCK = 99;
 export const gameLevels = [
     {
         level: 1,
-        numberOfMovements: 30,
-        pointsToWin: 7000,
+        numberOfMovements: 2,
+        pointsToWin: 384,
         board: [
             { x: 0 * DIAMOND_SIZE, y: -1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 0, column: 0, kind: EMPTY_BLOCK, },
             { x: 0 * DIAMOND_SIZE, y: -1 * DIAMOND_SIZE + GAME_BOARD_Y_OFFSET, row: 1, column: 0, kind: EMPTY_BLOCK, },

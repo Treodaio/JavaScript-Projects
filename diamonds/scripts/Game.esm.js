@@ -12,13 +12,14 @@ import { media } from './Media.esm.js';
 import { GameState } from './GameState.esm.js';
 import { mouseController } from './MouseController.esm.js';
 import { DIAMOND_SIZE, NUMBER_OF_DIAMONDS_TYPES } from './Diamonds.esm.js';
-
+import { resultScreen } from './ResultScreen.esm.js';
+import { userData } from './UserData.esm.js';
 
 const DIAMONDS_ARRAY_WIDTH = 8;
 const DIAMONDS_ARRAY_HEIGHT = DIAMONDS_ARRAY_WIDTH + 1 // with invisible first line
 const LAST_ELEMENT_DIAMONDS_ARRAY = DIAMONDS_ARRAY_WIDTH * DIAMONDS_ARRAY_HEIGHT - 1;
 const SWAPING_SPEED = 8;
-
+const TRANSPARENCY_SPEED = 10;
 
 class Game extends Common {
     constructor() {
@@ -38,12 +39,13 @@ class Game extends Common {
         this.handleMouseClick();
         this.findMatches();
         this.moveDiamonds();
+        this.hideAnimation()
         this.countScores();
         this.revertSwap();
         this.clearMatched();
         canvas.drawGameOnCanvas(this.gameState);
         this.gameState.getGameBoard().forEach(diamond => diamond.draw());
-        this.animationFrame = window.requestAnimationFrame(() => this.animate());
+        this.checkEndOfGame();
     }
 
     handleMouseState() {
@@ -56,7 +58,9 @@ class Game extends Common {
     }
 
     handleMouseClick() {
-        if (!mouseController.clicked) return;
+        if (!mouseController.clicked) {
+            return;
+        }
 
         const xClicked = Math.floor((mouseController.x - GAME_BOARD_X_OFFSET) / DIAMOND_SIZE);
         const yClicked = Math.floor((mouseController.y - GAME_BOARD_Y_OFFSET) / DIAMOND_SIZE);
@@ -67,9 +71,6 @@ class Game extends Common {
             return;
         }
 
-
-
-        // dynamic add properties to mouseController.
         if (mouseController.state === 1) {
             mouseController.firstClick = {
                 x: xClicked,
@@ -80,14 +81,13 @@ class Game extends Common {
                 x: xClicked,
                 y: yClicked,
             }
+
             mouseController.state = 0;
-
-
-            // ---> comm1
 
             if (
                 Math.abs(mouseController.firstClick.x - mouseController.secondClick.x) +
-                Math.abs(mouseController.firstClick.y - mouseController.secondClick.y) !== 1
+                Math.abs(mouseController.firstClick.y - mouseController.secondClick.y) !==
+                1
             ) {
                 return;
             }
@@ -97,7 +97,6 @@ class Game extends Common {
             this.gameState.decreasePointsMovement();
             mouseController.state = 0;
         }
-
         mouseController.clicked = false;
     }
 
@@ -105,41 +104,38 @@ class Game extends Common {
 
     findMatches() {
         this.gameState.getGameBoard().forEach((diamond, index, diamonds) => {
-            //Are we not dealing with hidden block of diamonds 
             if (diamond.kind === EMPTY_BLOCK || index < DIAMONDS_ARRAY_WIDTH || index === LAST_ELEMENT_DIAMONDS_ARRAY) {
                 return;
             }
+
             if (
                 diamonds[index - 1].kind === diamond.kind
                 && diamonds[index + 1].kind === diamond.kind
             ) {
-                // Checking -- This diamonds are on the same row? 
-                if (Math.floor((index - 1) / DIAMONDS_ARRAY_WIDTH) === Math.floor((index + 1) / DIAMONDS_ARRAY_WIDTH)) {
 
+                if (Math.floor((index - 1) / DIAMONDS_ARRAY_WIDTH) === Math.floor((index + 1) / DIAMONDS_ARRAY_WIDTH)) {
                     for (let i = -1; i <= 1; i++) {
                         diamonds[index + i].match++;
                     }
                 }
             }
-            // checking match for column
+
             if (
                 index >= DIAMONDS_ARRAY_WIDTH
                 && index < LAST_ELEMENT_DIAMONDS_ARRAY - DIAMONDS_ARRAY_WIDTH + 1
                 && diamonds[index - DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
                 && diamonds[index + DIAMONDS_ARRAY_WIDTH].kind === diamond.kind
             ) {
-                if (
-                    (index - DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH ===
-                    (index + DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH
-                ) {
-                    for (let i = DIAMONDS_ARRAY_WIDTH; i <= DIAMONDS_ARRAY_WIDTH; i += DIAMONDS_ARRAY_WIDTH) {
+                if ((index - DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH === (index + DIAMONDS_ARRAY_WIDTH) % DIAMONDS_ARRAY_WIDTH) {
+                    // in this place - is necessary
+                    for (let i = -DIAMONDS_ARRAY_WIDTH; i <= DIAMONDS_ARRAY_WIDTH; i += DIAMONDS_ARRAY_WIDTH) {
                         diamonds[index + i].match++;
                     }
                 }
             }
         });
-
     }
+
 
 
     moveDiamonds() {
@@ -148,25 +144,31 @@ class Game extends Common {
             let dx;
             let dy;
 
-            // if dx !==0 return true
-
             for (let speedSwap = 0; speedSwap < SWAPING_SPEED; speedSwap++) {
                 dx = diamond.x - diamond.row * DIAMOND_SIZE;
                 dy = diamond.y - diamond.column * DIAMOND_SIZE;
                 if (dx) {
                     diamond.x -= dx / Math.abs(dx);
                 }
-
                 if (dy) {
                     diamond.y -= dy / Math.abs(dy);
                 }
             }
-            // when loop ends check for shift
+
             if (dx || dy) {
                 this.gameState.setIsMoving(true);
             }
-
         });
+    }
+
+    hideAnimation() {
+        if (this.gameState.getIsMoving()) { return; }
+        this.gameState.getGameBoard().forEach(diamond => {
+            if (diamond.match && diamond.alpha > 10) {
+                diamond.alpha -= TRANSPARENCY_SPEED;
+                this.gameState.setIsMoving(true);
+            }
+        })
     }
 
     countScores() {
@@ -180,14 +182,14 @@ class Game extends Common {
 
 
 
-
     swapDiamonds() {
-        // mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH; - we reach a specific row - first row - 8 diamond,  second row - 16 diamond etc..
         const firstDiamond = mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.firstClick.x;
         const secondDiamond = mouseController.secondClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.secondClick.x;
 
         this.swap(this.gameState.getGameBoard()[firstDiamond], this.gameState.getGameBoard()[secondDiamond]);
     }
+    // mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH; - we reach a specific row - first row - 8 diamond,  second row - 16 diamond etc..
+
 
 
     revertSwap() {
@@ -243,6 +245,27 @@ class Game extends Common {
             }
 
         });
+    }
+
+    checkEndOfGame() {
+        if (!this.gameState.getLeftMovement() && !this.gameState.getIsMoving() && !this.gameState.getIsSwaping()) {
+            const isPlayerWinner = this.gameState.isPlayerWinner();
+            const currentLevel = Number(this.gameState.level);
+
+            if (isPlayerWinner && gameLevels[currentLevel]) {
+                if (!userData.checkAvailabilityLevel(currentLevel + 1)) {
+                    userData.addNewLevel(currentLevel + 1);
+                }
+            }
+
+            if (userData.getHighScores(currentLevel) < this.gameState.getPlayerPoints()) {
+                userData.setHighScore(currentLevel, this.gameState.getPlayerPoints());
+            }
+
+            resultScreen.viewResultScreen(isPlayerWinner, this.gameState.getPlayerPoints(), currentLevel);
+        } else {
+            this.animationFrame = window.requestAnimationFrame(() => this.animate());
+        }
     }
 
     // it's reference. We change the original table
