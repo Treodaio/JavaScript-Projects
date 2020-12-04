@@ -14,9 +14,10 @@ import { mouseController } from './MouseController.esm.js';
 import { DIAMOND_SIZE, NUMBER_OF_DIAMONDS_TYPES } from './Diamonds.esm.js';
 import { resultScreen } from './ResultScreen.esm.js';
 import { userData } from './UserData.esm.js';
+import { movement } from './Movement.esm.js';
 
-const DIAMONDS_ARRAY_WIDTH = 8;
-const DIAMONDS_ARRAY_HEIGHT = DIAMONDS_ARRAY_WIDTH + 1 // with invisible first line
+export const DIAMONDS_ARRAY_WIDTH = 8;
+export const DIAMONDS_ARRAY_HEIGHT = DIAMONDS_ARRAY_WIDTH + 1 // with invisible first line
 const LAST_ELEMENT_DIAMONDS_ARRAY = DIAMONDS_ARRAY_WIDTH * DIAMONDS_ARRAY_HEIGHT - 1;
 const SWAPING_SPEED = 8;
 const TRANSPARENCY_SPEED = 10;
@@ -45,6 +46,7 @@ class Game extends Common {
         this.clearMatched();
         canvas.drawGameOnCanvas(this.gameState);
         this.gameState.getGameBoard().forEach(diamond => diamond.draw());
+        // movement.checkPosibilityMovement();
         this.checkEndOfGame();
     }
 
@@ -71,19 +73,27 @@ class Game extends Common {
             return;
         }
 
+
+        console.log(`Oś pozioma (x -> kolumna) ${xClicked}`);
+        console.log(`Oś pionowa (y -> wiersz) ${yClicked}`);
         if (mouseController.state === 1) {
             mouseController.firstClick = {
                 x: xClicked,
                 y: yClicked,
             }
+            const myDiamond = mouseController.firstClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.firstClick.x;
+            console.log(myDiamond);
+
         } else if (mouseController.state === 2) {
             mouseController.secondClick = {
                 x: xClicked,
                 y: yClicked,
             }
+            const secondDiamond = mouseController.secondClick.y * DIAMONDS_ARRAY_WIDTH + mouseController.secondClick.x;
+            console.log(secondDiamond);
+
 
             mouseController.state = 0;
-
             if (
                 Math.abs(mouseController.firstClick.x - mouseController.secondClick.x) +
                 Math.abs(mouseController.firstClick.y - mouseController.secondClick.y) !==
