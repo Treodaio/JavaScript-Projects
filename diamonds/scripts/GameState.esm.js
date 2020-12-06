@@ -1,6 +1,7 @@
 // STAN GRY
 
 import { Diamond } from './Diamonds.esm.js';
+import { DIAMONDS_ARRAY_WIDTH, game } from './Game.esm.js';
 
 export class GameState {
     constructor(level, leftMovement, pointsToWin, diamonds, diamondsSpriteImage) {
@@ -40,7 +41,21 @@ export class GameState {
         return this._pointsToWin;
     }
 
+    mixDiamonds() {
+        const mixedDiamonds = _gameBoard.splice(0, DIAMONDS_ARRAY_WIDTH);
+        let index = DIAMONDS_ARRAY_WIDTH;
 
-    mixDiamonds() { }
-
+        while (_gameBoard.length) {
+            const randomNumber = Math.floor(Math.random() * _gameBoard.length);
+            const nextElementToMix = _gameBoard.splice(randomNumber, 1)[0];
+            const element = {
+                ...nextElementToMix,
+                row: index % DIAMONDS_ARRAY_WIDTH,
+                column: Math.floor(index / DIAMONDS_ARRAY_WIDTH),
+            };
+            index++;
+            mixedDiamonds.push(element);
+        }
+        _gameBoard.push(...mixedDiamonds);
+    }
 }

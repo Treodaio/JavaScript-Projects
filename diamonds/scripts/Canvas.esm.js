@@ -29,6 +29,7 @@ class Canvas extends Common {
     }
 
     drawBackground() {
+
         this.context.drawImage(media.backgroundImage, 0, 0);
     }
 
