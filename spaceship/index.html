@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokument</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="spaceship">
+            <div class="enemy"></div>
+            <div class="enemy--big"></div>
+            <div class="explosion"></div>
+            <div class="explosion--big"></div>
+            <div class="missile"></div>
+        </div>
+        <section class="information">
+            <article class="information__content">Score: 0</article>
+            <article class="information__content">Lives: 3</article>
+        </section>
+        <div class="modal hide">
+            <div class="modal__content">
+                <p class="modal__text">
+                    You lose! Start new game!
+                </p>
+                <button class="modal__button">New game</button>
+            </div>
+        </div>
+    </div>
+    <script type = "module" src="./scripts/Game.js"></script>
+</body>
+</html>

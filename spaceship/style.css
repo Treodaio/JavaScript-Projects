@@ -1,0 +1,177 @@
+/* font-family: 'Lato', sans-serif; */
+:root {
+    --primary-color: #09fcfd;
+    --size-unit: 64px;
+    --ships-animation-time: 200ms;
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    position: relative;
+}
+
+.information {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 32px;
+    z-index: 2;
+    position: relative;
+}
+
+.modal {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.modal__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal__text {
+    font-size: 42px;
+    text-align: center;
+}
+
+.modal__button {
+    padding: 30px 15px;
+    background-color: transparent;
+    border: 3px solid var(--primary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 42px;
+    text-transform: uppercase;
+    margin-top: 30px;
+    border-radius: 5px;
+    outline: none;
+    transition: box-shadow .1s ease-in;
+}
+
+.modal__button:hover {
+    box-shadow: 0px 0px 20px 5px var(--primary-color);
+}
+
+.spaceship {
+    width: var(--size-unit);
+    height: var(--size-unit);
+    background-image: url('./images/ship.png');
+    animation: move var(--ships-animation-time) steps(8) infinite;
+}
+
+.enemy {
+    width: var(--size-unit);
+    height: var(--size-unit);
+    background-image: url('./images/enemy.png');
+    animation: moveEnemy var(--ships-animation-time) steps(5) infinite;
+}
+
+.enemy--big {
+    width: calc(var(--size-unit) * 2);
+    height: calc(var(--size-unit) * 2);
+    background-image: url('./images/enemy-big.png');
+    animation: moveEnemyBig var(--ships-animation-time) steps(8) infinite;
+}
+
+
+.explosion {
+    width: var(--size-unit);
+    height: var(--size-unit);
+    background-image: url('./images/explosion.png');
+    animation: explosion calc(var(--ships-animation-time) / .3) steps(17) infinite;
+}
+
+.explosion--big {
+    width: calc(var(--size-unit) * 2);
+    height: calc(var(--size-unit) * 2);
+    background-image: url('./images/explosion-big.png');
+    animation: explosionBig calc(var(--ships-animation-time) / .3) steps(17) infinite;
+}
+
+.missile {
+    background-image: url('./images/missile.png');
+    background-size: cover;
+    width: 12px;
+    height: 24px;
+}
+
+@keyframes move {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: calc(var(--size-unit) * -8);
+    }
+}
+
+@keyframes moveEnemy {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: calc(var(--size-unit) * -5);
+    }
+}
+
+@keyframes moveEnemyBig {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: calc(var(--size-unit) * -16);
+    }
+}
+
+@keyframes explosion {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: calc(var(--size-unit) * -17);
+    }
+}
+
+@keyframes explosionBig {
+    from {
+        background-position-x: 0;
+    }
+
+    to {
+        background-position-x: calc(var(--size-unit) * -34);
+    }
+}
+
+.hide {
+    display: none;
+}
