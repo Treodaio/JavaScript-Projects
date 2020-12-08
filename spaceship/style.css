@@ -27,10 +27,11 @@ body {
 
 .information {
     color: white;
+    user-select: none;
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    font-size: 32px;
+    font-size: 3rem;
     z-index: 2;
     position: relative;
 }
@@ -80,6 +81,7 @@ body {
 }
 
 .spaceship {
+    position: fixed;
     width: var(--size-unit);
     height: var(--size-unit);
     background-image: url('./images/ship.png');
@@ -91,6 +93,8 @@ body {
     height: var(--size-unit);
     background-image: url('./images/enemy.png');
     animation: moveEnemy var(--ships-animation-time) steps(5) infinite;
+    z-index: 1;
+    position: fixed;
 }
 
 .enemy--big {
@@ -98,6 +102,7 @@ body {
     height: calc(var(--size-unit) * 2);
     background-image: url('./images/enemy-big.png');
     animation: moveEnemyBig var(--ships-animation-time) steps(8) infinite;
+    position: fixed;
 }
 
 
@@ -105,14 +110,16 @@ body {
     width: var(--size-unit);
     height: var(--size-unit);
     background-image: url('./images/explosion.png');
-    animation: explosion calc(var(--ships-animation-time) / .3) steps(17) infinite;
+    animation: explosion calc(var(--ships-animation-time) / .3) steps(17) forwards;
+    position: fixed;
 }
 
 .explosion--big {
     width: calc(var(--size-unit) * 2);
     height: calc(var(--size-unit) * 2);
     background-image: url('./images/explosion-big.png');
-    animation: explosionBig calc(var(--ships-animation-time) / .3) steps(17) infinite;
+    animation: explosionBig calc(var(--ships-animation-time) / .3) steps(17) forwards;
+    position: fixed;
 }
 
 .missile {
@@ -120,6 +127,7 @@ body {
     background-size: cover;
     width: 12px;
     height: 24px;
+    position: absolute;
 }
 
 @keyframes move {
