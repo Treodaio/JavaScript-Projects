@@ -1,6 +1,5 @@
 export class Enemy {
     constructor(container, speed, enemyType, explosionClass, lives = 1) {
-        // debugger;
         this.container = container;
         this.element = document.createElement('div');
         this.enemyType = enemyType;
@@ -35,8 +34,23 @@ export class Enemy {
         return Math.floor(Math.random() * (window.innerWidth - this.element.offsetWidth));
     }
 
-    remove() {
+    hit() {
+        this.lives--;
+        if (!this.lives) {
+            this.explode();
+        }
+    }
+
+    explode() {
+        this.element.classList.remove(this.enemyType);
+        this.element.classList.add(this.explosionClass);
         clearInterval(this.positionInterval);
-        this.element.remove();
+
+        const animationTime = parseInt(
+            getComputedStyle(document.documentElement).getPropertyValue('--explosions-animation-time'), 10);
+
+        setTimeout(() => {
+            this.element.remove();
+        }, animationTime);
     }
 }

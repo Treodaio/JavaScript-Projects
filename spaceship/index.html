@@ -12,16 +12,13 @@
     <div class="container"data-container>
         <div class="spaceship" data-spaceship></div>
         <section class="information">
-            <article class="information__content">Score: 0</article>
-            <article class="information__content">Lives: 3</article>
+            <article class="information__content" data-score>Score: 0</article>
+            <article class="information__content" data-lives>Lives: 3</article>
         </section>
-        <div class="modal hide">
-            <div class="modal__content">
-                <p class="modal__text">
-                    You lose! Start new game!
-                </p>
-                <button class="modal__button">New game</button>
+        <div class="modal hide" data-modal>
+            <div class="modal__content" data-scoreInfo>
             </div>
+            <button class="modal__button" data-endButton>New game</button>
         </div>
     </div>
     <script type = "module" src="./scripts/Game.js"></script>

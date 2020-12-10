@@ -3,6 +3,8 @@
     --primary-color: #09fcfd;
     --size-unit: 64px;
     --ships-animation-time: 200ms;
+    --explosions-animation-time: 600ms;
+    --hit--color: #be0c0c;
 }
 
 *,
@@ -45,6 +47,7 @@ body {
     left: 0;
     z-index: 3;
     display: flex;
+    flex-direction: column;
     color: white;
     justify-content: center;
     align-items: center;
@@ -55,9 +58,6 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-}
-
-.modal__text {
     font-size: 42px;
     text-align: center;
 }
@@ -110,7 +110,7 @@ body {
     width: var(--size-unit);
     height: var(--size-unit);
     background-image: url('./images/explosion.png');
-    animation: explosion calc(var(--ships-animation-time) / .3) steps(17) forwards;
+    animation: explosion calc(var(--explosions-animation-time) / .3) steps(17) forwards;
     position: fixed;
 }
 
@@ -118,7 +118,7 @@ body {
     width: calc(var(--size-unit) * 2);
     height: calc(var(--size-unit) * 2);
     background-image: url('./images/explosion-big.png');
-    animation: explosionBig calc(var(--ships-animation-time) / .3) steps(17) forwards;
+    animation: explosionBig calc(var(--explosions-animation-time) / .3) steps(17) forwards;
     position: fixed;
 }
 
@@ -182,4 +182,9 @@ body {
 
 .hide {
     display: none;
+}
+
+
+.hit {
+    background-color: var(--hit--color);
 }

@@ -5,6 +5,10 @@ export class Spaceship {
     #leftArrow = false;
     #rightArrow = false;
 
+    #keyDownListener = null;
+    #keyUpListener = null;
+    #clickListener = null;
+
     missiles = [];
     constructor(element, container) {
         this.element = element;
@@ -12,12 +16,12 @@ export class Spaceship {
     }
 
     init() {
-        this.#setPosition();
-        this.#eventListeners();
+        this.setPosition();
+        this.#setEventListeners();
         this.#gameLoop();
     }
 
-    #setPosition() {
+    setPosition() {
         this.element.style.bottom = '10px';
         this.element.style.left = `${window.innerWidth / 2 - this.#getPosition()}px`;
     }
@@ -26,9 +30,8 @@ export class Spaceship {
         return this.element.offsetLeft + this.element.offsetWidth / 2;
     }
     // between px word cant be space. is's css injection 
-    #eventListeners() {
-        document.addEventListener('keydown', ({ key }) => {
-            console.log(key);
+    #setEventListeners() {
+        this.#keyDownListener = document.addEventListener('keydown', ({ key }) => {
 
             switch (key) {
                 case "a":
@@ -46,7 +49,7 @@ export class Spaceship {
 
         })
 
-        document.addEventListener('keyup', ({ key }) => {
+        this.#keyUpListener = document.addEventListener('keyup', ({ key }) => {
             switch (key) {
                 case "a":
                 case "ArrowLeft": {
@@ -65,9 +68,10 @@ export class Spaceship {
             }
         })
 
-        document.addEventListener('click', () => {
+        this.#clickListener = document.addEventListener('click', () => {
             this.#shot();
         })
+
     }
 
     #gameLoop = () => {
@@ -90,6 +94,12 @@ export class Spaceship {
         const missile = new Missile(this.#getPosition(), this.element.offsetTop, this.container);
         missile.init();
         this.missiles.push(missile);
+    }
+
+    removeEventListener() {
+        document.removeEventListener('keydown', this.#keyDownListener());
+        document.removeEventListener('keyup', this.#keyUpListener());
+        document.removeEventListener('click', this.#clickListener());
     }
 
 }
