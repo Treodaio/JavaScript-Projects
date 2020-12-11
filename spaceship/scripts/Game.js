@@ -32,7 +32,7 @@ class Game {
         this.#checkPositionInterval = setInterval(() => this.#checkPosition(), 1);
         this.#createEnemyInterval = setInterval(() => this.#generateEnemyType(), 1000);
 
-        this.#enemySpeed = 50;
+        this.#enemySpeed = 5;
         if (this.#lives !== 3) { this.#lives = 3; }
         if (this.#score) { this.#score = 0; }
 
@@ -101,9 +101,9 @@ class Game {
     #updateScore() {
         this.#score++;
         if (!(this.#score % 5)) { this.#createEnemyInterval--; }
-
         this.#updateScoreText();
     }
+
     #updateLives() {
         this.#lives--;
         this.#updateLivesText();
@@ -125,14 +125,22 @@ class Game {
     #endGame() {
         this.#htmlElements.modal.classList.remove('hide');
         this.#htmlElements.scoreInfo.textContent = `End game! You're score: ${this.#score}`;
+
         this.#enemies.forEach(enemy => enemy.explode());
         this.#enemies.length = 0;
+
         clearInterval(this.#createEnemyInterval);
         clearInterval(this.#checkPositionInterval);
+
         this.#ship.missiles.forEach(missile => missile.remove());
         this.#ship.missiles.length = 0;
-    }
 
+        document.removeEventListener('keydown', this.#ship.keyDown);
+        document.removeEventListener('keyup', this.#ship.keyUp);
+        document.removeEventListener('click', this.#ship.click);
+
+        window.cancelAnimationFrame(this.#ship.keyAnimationFrame);
+    }
 }
 
 
@@ -141,3 +149,4 @@ window.onload = function () {
     const game = new Game();
     game.newGame();
 }
+

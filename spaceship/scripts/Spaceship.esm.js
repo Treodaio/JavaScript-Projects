@@ -5,11 +5,13 @@ export class Spaceship {
     #leftArrow = false;
     #rightArrow = false;
 
-    #keyDownListener = null;
-    #keyUpListener = null;
-    #clickListener = null;
-
+    click = null;
+    keyUp = null;
+    keyDown = null;
+    keyAnimationFrame = null;
     missiles = [];
+
+
     constructor(element, container) {
         this.element = element;
         this.container = container;
@@ -29,57 +31,63 @@ export class Spaceship {
     #getPosition() {
         return this.element.offsetLeft + this.element.offsetWidth / 2;
     }
-    // between px word cant be space. is's css injection 
-    #setEventListeners() {
-        this.#keyDownListener = document.addEventListener('keydown', ({ key }) => {
 
-            switch (key) {
+    #setEventListeners() {
+        const that = this;
+
+        document.addEventListener('keydown', function keyDownListener(event) {
+            switch (event.key) {
                 case "a":
                 case "ArrowLeft": {
-                    this.#leftArrow = true;
+                    that.#leftArrow = true;
                     break;
                 }
 
                 case "d":
                 case "ArrowRight": {
-                    this.#rightArrow = true;
+                    that.#rightArrow = true;
                     break;
                 }
             }
+            that.keyDown = keyDownListener;
+        }, false);
 
-        })
-
-        this.#keyUpListener = document.addEventListener('keyup', ({ key }) => {
-            switch (key) {
+        document.addEventListener('keyup', function keyUpListener(event) {
+            switch (event.key) {
                 case "a":
                 case "ArrowLeft": {
-                    this.#leftArrow = false;
+                    that.#leftArrow = false;
                     break;
                 }
                 case "d":
                 case "ArrowRight": {
-                    this.#rightArrow = false;
+                    that.#rightArrow = false;
                     break;
                 }
                 case "Enter": {
-                    this.#shot();
+                    that.#shot();
                     break;
                 }
             }
-        })
+            that.keyUp = keyUpListener;
+        }, false);
 
-        this.#clickListener = document.addEventListener('click', () => {
-            this.#shot();
-        })
+        document.addEventListener('click', function clickListener() {
+            that.#shot();
+            that.click = clickListener;
+        }, false);
+
 
     }
 
     #gameLoop = () => {
         this.#whatKey();
-        requestAnimationFrame(this.#gameLoop);
+        this.keyAnimationFrame = requestAnimationFrame(this.#gameLoop);
     }
 
     #whatKey() {
+        console.log('poruszam sied');
+
         if (this.#leftArrow && this.#getPosition() > 0) {
             this.element.style.left = `${parseInt(this.element.style.left, 10) - this.#modifier}px`;
         }
@@ -91,15 +99,64 @@ export class Spaceship {
     }
 
     #shot() {
+        console.log('strzelam');
+
         const missile = new Missile(this.#getPosition(), this.element.offsetTop, this.container);
         missile.init();
         this.missiles.push(missile);
     }
 
-    removeEventListener() {
-        document.removeEventListener('keydown', this.#keyDownListener());
-        document.removeEventListener('keyup', this.#keyUpListener());
-        document.removeEventListener('click', this.#clickListener());
-    }
 
 }
+
+
+
+// searchList = this.specificTable.filter((item) => item.name.toLowerCase().includes('one'));
+// console.log(searchList);
+
+// if (!searchList) {
+//     this.specificTable.push(fun);
+// }
+
+
+
+
+    // keyDownListener(event) {
+    //     switch (event.key) {
+    //         case "a":
+    //         case "ArrowLeft": {
+    //             this.#leftArrow = true;
+    //             break;
+    //         }
+
+    //         case "d":
+    //         case "ArrowRight": {
+    //             this.#rightArrow = true;
+    //             break;
+    //         }
+    //     }
+    // }
+
+
+    // keyUpListener(event) {
+    //     switch (event.key) {
+    //         case "a":
+    //         case "ArrowLeft": {
+    //             this.#leftArrow = false;
+    //             break;
+    //         }
+    //         case "d":
+    //         case "ArrowRight": {
+    //             this.#rightArrow = false;
+    //             break;
+    //         }
+    //         case "Enter": {
+    //             this.#shot();
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // clickListener() {
+    //     this.#shot();
+    // }
