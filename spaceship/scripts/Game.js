@@ -32,7 +32,7 @@ class Game {
         this.#checkPositionInterval = setInterval(() => this.#checkPosition(), 1);
         this.#createEnemyInterval = setInterval(() => this.#generateEnemyType(), 1000);
 
-        this.#enemySpeed = 5;
+        this.#enemySpeed = 1;
         if (this.#lives !== 3) { this.#lives = 3; }
         if (this.#score) { this.#score = 0; }
 
@@ -134,6 +134,10 @@ class Game {
 
         this.#ship.missiles.forEach(missile => missile.remove());
         this.#ship.missiles.length = 0;
+
+        this.#enemySpeed = null;
+        this.#lives = 0;
+        this.#score = 0;
 
         document.removeEventListener('keydown', this.#ship.keyDown);
         document.removeEventListener('keyup', this.#ship.keyUp);

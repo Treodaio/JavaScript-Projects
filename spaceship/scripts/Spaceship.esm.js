@@ -21,6 +21,7 @@ export class Spaceship {
         this.setPosition();
         this.#setEventListeners();
         this.#gameLoop();
+
     }
 
     setPosition() {
@@ -108,55 +109,3 @@ export class Spaceship {
 
 
 }
-
-
-
-// searchList = this.specificTable.filter((item) => item.name.toLowerCase().includes('one'));
-// console.log(searchList);
-
-// if (!searchList) {
-//     this.specificTable.push(fun);
-// }
-
-
-
-
-    // keyDownListener(event) {
-    //     switch (event.key) {
-    //         case "a":
-    //         case "ArrowLeft": {
-    //             this.#leftArrow = true;
-    //             break;
-    //         }
-
-    //         case "d":
-    //         case "ArrowRight": {
-    //             this.#rightArrow = true;
-    //             break;
-    //         }
-    //     }
-    // }
-
-
-    // keyUpListener(event) {
-    //     switch (event.key) {
-    //         case "a":
-    //         case "ArrowLeft": {
-    //             this.#leftArrow = false;
-    //             break;
-    //         }
-    //         case "d":
-    //         case "ArrowRight": {
-    //             this.#rightArrow = false;
-    //             break;
-    //         }
-    //         case "Enter": {
-    //             this.#shot();
-    //             break;
-    //         }
-    //     }
-    // }
-
-    // clickListener() {
-    //     this.#shot();
-    // }
